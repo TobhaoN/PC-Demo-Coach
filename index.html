@@ -553,25 +553,33 @@ function renderGamePlan() {
     </div>`;
   }
 
-  // Room-specific warnings
+  // Virtual demo warnings
+  if (personas.length > 2) {
+    warnings.push('⚠️ 3+ people on the call — you can\'t see body language as easily. Call on people by name often to check engagement. "Tom, does that match what you\'re seeing?" Silence on a Teams call = someone multitasking.');
+  }
   if (personas.some(p => p.id === 'fixedops') && personas.length > 1) {
-    warnings.push('⚠️ Fixed Ops Director in the room — do NOT save service for the end. Give David equal airtime or lead with his department.');
+    warnings.push('⚠️ Fixed Ops Director on the call — do NOT save service for the end. On a virtual demo, the Fixed Ops person is most likely to drop early or mute and multitask if you lead with 30 min of sales content.');
   }
   if (personas.some(p => p.id === 'fi') && personas.length > 1) {
-    warnings.push('⚠️ F&I Director in the room — do NOT bolt F&I on as an afterthought. Trish\'s department generates $1,500-2,000 per vehicle in backend profit.');
+    warnings.push('⚠️ F&I Director on the call — their department generates $1,500-2,000/vehicle in backend profit. Don\'t bolt F&I on as the last 5 minutes when everyone\'s checked out. If you can\'t give F&I real time, schedule a separate focused call.');
   }
   if (personas.some(p => p.id === 'controller')) {
-    warnings.push('⚠️ Controller in the room — did you send a one-page summary BEFORE this meeting? If not, Maggie may not be mentally present. Address accounting concerns proactively.');
+    warnings.push('⚠️ Controller on the call — send a one-page summary BEFORE the meeting so they know why they\'re there. Controllers on a Teams call with no pre-context will have Outlook open on their other monitor the entire time.');
   }
   if (personas.some(p => p.id === 'usedcar')) {
-    warnings.push('⚠️ Used Car Manager in the room — 2-minute attention window. Bring VIN-specific data from their actual inventory. Consider meeting in the lane, not the conference room.');
+    warnings.push('⚠️ Used Car Manager on the call — 2-minute attention window. They\'re likely joining from their desk with AuctionACCESS and vAuto already open. Pull up VINs from their actual lot to keep them off those other tabs.');
   }
   if (personas.some(p => p.id === 'gm') && personas.some(p => p.id === 'gsm')) {
-    warnings.push('💡 GM + GSM both present — demo the management view (for Tom) but use a real deal scenario (for Marcus). Show how the same tool serves both the strategic and tactical need.');
+    warnings.push('💡 GM + GSM both on — demo the management view (for the GM) but use a real deal scenario (for the GSM). On a Teams call, the GSM will mute and text the RSM "this doesn\'t apply to me" if you only show reports.');
   }
+  if (personas.some(p => p.id === 'marketing') && !personas.some(p => p.id === 'gm')) {
+    warnings.push('💡 Marketing Director without the GM — great for depth on DDC Advertising, Dealer.com, and AMP, but remember the Marketing Director needs to sell this internally to the GM. Arm them with the ROI story they can take back.');
+  }
+  // General virtual demo tips (always show)
+  warnings.push('📹 Virtual demo basics — camera on, clean background, close unnecessary tabs (notification sounds kill credibility). Share only the app window, not your full screen. Have your game plan on a second monitor or phone.');
 
   if (warnings.length) {
-    html += `<div class="gp-section warning"><h4>⚠️ Room-Specific Warnings</h4><ul>${warnings.map(w => `<li>${w}</li>`).join('')}</ul></div>`;
+    html += `<div class="gp-section warning"><h4>⚠️ Virtual Demo Warnings</h4><ul>${warnings.map(w => `<li>${w}</li>`).join('')}</ul></div>`;
   }
 
   // Opening questions per persona
