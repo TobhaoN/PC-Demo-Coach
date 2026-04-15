@@ -609,15 +609,36 @@ function renderGamePlan() {
     </div>
   </div>`;
 
-  // Assumptive close per persona
-  html += `<div class="gp-section green"><h4>✅ Your Close — Land the Next Step</h4><p style="margin-bottom:8px">Goal: Get agreement to a specific follow-up with the RSM. Phrased assumptively, never as a pressure close.</p>`;
-  personas.forEach(p => {
-    html += `<div style="margin:8px 0;padding:8px 12px;background:#fff;border-radius:6px;border-left:3px solid var(--green)">
-      <strong>${p.emoji} ${p.name}:</strong><br>
-      <div class="quote">${p.closeLanguage}</div>
-    </div>`;
-  });
-  html += `</div>`;
+  // RSM Handoff — Close
+  html += `<div class="gp-section green"><h4>✅ Hand Off to the Regional — Close Questions</h4>
+    <p style="margin-bottom:10px">Your job is NOT to close the deal. Your job is to surface enough interest and clarity that the RSM can take the next step. Wrap up by gauging readiness and removing blockers.</p>
+    <div style="padding:10px 14px;background:#fff;border-radius:8px;margin-bottom:10px">
+      <strong style="color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:.5px">Gauge Interest & Get the Handoff</strong>
+      <ul style="margin-top:6px">
+        <li><strong>"Based on what we covered today, do you want [RSM name] to put together a quote for you?"</strong> — Direct, assumptive, easy yes.</li>
+        <li><strong>"What do next steps look like on your end?"</strong> — Lets them tell you where they are. Reveals timeline, internal approvals needed, budget cycles.</li>
+        <li><strong>"What are your blockers?"</strong> — Surfaces the real obstacles: contract timing, current vendor lock-in, internal politics, budget. This is gold for the RSM.</li>
+      </ul>
+    </div>
+    <div style="padding:10px 14px;background:#fff;border-radius:8px;margin-bottom:10px">
+      <strong style="color:var(--joyride);font-size:11px;text-transform:uppercase;letter-spacing:.5px">Deeper Probes (if they're engaged)</strong>
+      <ul style="margin-top:6px">
+        <li><strong>"When does your current contract come up?"</strong> — Timeline intel for the RSM.</li>
+        <li><strong>"Who else on your team would need to see this before making a decision?"</strong> — Identifies missing stakeholders for the next meeting.</li>
+        <li><strong>"If we could address [specific concern they raised], would that change how you're thinking about this?"</strong> — Tests whether objections are real blockers or just noise.</li>
+        <li><strong>"Is there anything we didn't cover today that would be important for your decision?"</strong> — Catches blind spots before you leave.</li>
+      </ul>
+    </div>
+    <div style="padding:10px 14px;background:#fffaf5;border-radius:8px;border-left:3px solid var(--orange)">
+      <strong style="color:var(--orange);font-size:11px;text-transform:uppercase;letter-spacing:.5px">⚠️ What NOT to do</strong>
+      <ul style="margin-top:6px">
+        <li>Don't quote pricing yourself — that's the RSM's conversation</li>
+        <li>Don't ask "On a scale of 1-10..." — universally hated by dealers</li>
+        <li>Don't end with "Do you have any questions?" — too passive</li>
+        <li>Don't send a proposal or pricing after the call without the RSM's involvement</li>
+      </ul>
+    </div>
+  </div>`;
 
   // Fatal mistakes
   html += `<div class="gp-section warning"><h4>🚫 Do NOT Do This</h4>`;
@@ -702,10 +723,16 @@ function renderPhase2() {
       });
     }
   } else {
-    html += `<div class="live-card checkpoint"><h5 class="green">✅ Close Phase — Land the Next Step</h5><p>Transition now. Don't introduce new features. Summarize and close assumptively.</p></div>`;
-    personas.forEach(p => {
-      html += `<div class="live-card checkpoint"><h5 class="green">${p.emoji} Close for ${p.name}:</h5><p>${p.closeLanguage}</p></div>`;
-    });
+    html += `<div class="live-card checkpoint"><h5 class="green">✅ Close Phase — Hand Off to Regional</h5><p>Transition now. Don't introduce new features. Summarize what you showed and use these questions to set up the RSM.</p></div>`;
+    html += `<div class="live-card checkpoint"><h5 class="green">💬 Ask:</h5>
+      <ul style="padding-left:16px;margin:4px 0">
+        <li><strong>"Do you want [RSM] to put together a quote for you?"</strong></li>
+        <li><strong>"What do next steps look like on your end?"</strong></li>
+        <li><strong>"What are your blockers?"</strong></li>
+        <li><strong>"Who else would need to see this before making a decision?"</strong></li>
+        <li><strong>"When does your current contract come up?"</strong></li>
+      </ul>
+    </div>`;
   }
 
   // Attention window warning
