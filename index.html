@@ -247,6 +247,19 @@ const PERSONAS = {
     closeLanguage:'"Can we schedule a walkthrough with your [store] office manager where we trace a deal from desk to posting and identify the manual touchpoints?"',
     fatalMistakes:['Forgetting the Controller exists','Spending the whole demo on sales-floor features','Not knowing the total cost when asked','Saying "we integrate with CDK" without specifying what data, what direction, what frequency'],
     goldenInsight:'Maggie controls the checkbook and catches every mistake the front of house makes. If you sell to the GM and ignore the Controller, she\'ll find every integration flaw and hidden cost — and kill the deal with a spreadsheet.'
+  },
+  marketing: {
+    id:'marketing', emoji:'📣', name:'Marketing Director', role:'Digital strategy, lead gen, brand, ROI on ad spend',
+    window:'7-8 min', windowNum:7,
+    language:['CPL','attribution','SEO','SEM','lead quality','conversion rate','ad spend ROI','brand consistency'],
+    decisionDriver:'Lead generation ROI — "Is this driving more quality leads for less money?"',
+    openingQ:'"When you look at your lead sources this month, which channel is giving you the best cost-per-lead — and which one are you most frustrated with?"',
+    demoFrame:'Show the marketing funnel end-to-end: DDC Advertising driving traffic → Dealer.com converting visitors → VinSolutions capturing leads enriched with AT/KBB data → AMP re-engaging past customers. Focus on attribution and measurability.',
+    outcomeFrame:'"Here\'s how you\'ll see exactly which marketing dollars are driving deals."',
+    followUp:'Email with performance data: attribution model overview, sample campaign analytics, case study from similar-sized dealer showing CPL improvement and lead quality lift. Include a proposed 30-day pilot framework.',
+    closeLanguage:'"Can we schedule a session where I walk your marketing team through the attribution dashboard with your actual data? I want to show you where the gaps are in your current lead tracking."',
+    fatalMistakes:['Skipping attribution — marketing directors need to prove ROI to the GM','Talking about features without connecting to lead gen metrics','Ignoring their current agency relationship (they may have one they like)','Not knowing the difference between DDC Advertising and Dealer.com managed services'],
+    goldenInsight:'The Marketing Director lives and dies by lead quality and attribution. They need to prove to the GM that every dollar spent is working. Show them closed-loop attribution from ad impression to sold deal — that\'s the story that gets their buy-in and budget approval.'
   }
 };
 
@@ -255,7 +268,7 @@ const PRODUCTS = ['VinSolutions','vAuto','Dealer.com','Deal Central','Dealertrac
 const R360_PRODUCTS = ['Autotrader','Dealer.com','VinSolutions','vAuto','Deal Central','Dealertrack DMS','Xtime','AMP','DDC Advertising','UNIFI / F&I'];
 
 const R360_GUIDE = {
-  name: 'Retail 360 (R360)',
+  name: 'Cox Connected Demo',
   time: '15-20 min',
   description: 'The connected ecosystem demo — shows how the full Cox Automotive suite (Autotrader, Dealer.com, VinSolutions, vAuto, Deal Central, Dealertrack DMS, Xtime, AMP, DDC Advertising, UNIFI) works together as a unified system. This is the "exclamation point of a connected demo." (Richard White)',
   flow: [
@@ -272,12 +285,12 @@ const R360_GUIDE = {
     '"Zero integration fees" — every connection is free, unlike CDK/Reynolds ($300-700/mo)',
     '"First-party data that nobody else has" — AT/KBB shopping behavior is exclusive to Cox',
     '"One customer record, one data set, zero re-entry" — data flows, it doesn\'t get re-keyed',
-    '"The exclamation point of a connected demo" — Richard White on Deal Central\'s role in R360'
+    '"The exclamation point of a connected demo" — Richard White on Deal Central\'s role in the Cox Connected Demo'
   ],
   antiPatterns: [
     'Don\'t demo each product independently and say "they integrate" at the end — show the HANDOFFS',
     'Don\'t spend equal time on every product — weight toward the personas in the room',
-    'Don\'t skip the "loop" close — the lifecycle story is what makes R360 different from 7 separate demos',
+    'Don\'t skip the "loop" close — the lifecycle story is what makes the Cox Connected Demo different from 7 separate demos',
     'Don\'t forget to say "zero integration fees" — it\'s the single most powerful multi-solution argument'
   ]
 };
@@ -410,16 +423,16 @@ function renderPhase1() {
       <div style="margin-bottom:12px;padding:12px 14px;border-radius:10px;border:2px solid ${state.r360?'var(--aqua)':'var(--border)'};background:${state.r360?'#00BCDD08':'var(--card)'};cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px" onclick="toggleR360()">
         <div style="width:42px;height:42px;border-radius:10px;background:${state.r360?'linear-gradient(135deg,var(--power),var(--aqua))':'var(--bg)'};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .15s">${state.r360?'🔄':'⭕'}</div>
         <div style="flex:1">
-          <div style="font-size:14px;font-weight:700;color:${state.r360?'var(--trust)':'var(--muted)'}">Retail 360 (R360)</div>
+          <div style="font-size:14px;font-weight:700;color:${state.r360?'var(--trust)':'var(--muted)'}">Cox Connected Demo</div>
           <div style="font-size:11px;color:var(--muted)">15-20 min connected ecosystem demo — Autotrader, Dealer.com, VinSolutions, vAuto, Deal Central, DMS, Xtime, AMP, DDC Advertising, UNIFI — full customer lifecycle</div>
         </div>
         <div style="font-size:11px;font-weight:700;color:${state.r360?'var(--aqua)':'var(--muted)'}">⏱ 15-20m</div>
       </div>
-      <p style="font-size:11px;color:var(--muted);margin-bottom:8px">${state.r360 ? '✓ R360 selected as your lead demo. <strong style="color:var(--trust)">Select products below for deeper dives after R360:</strong>' : 'Or select individual products:'}</p>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:8px">${state.r360 ? '✓ Cox Connected Demo selected as your lead demo. <strong style="color:var(--trust)">Select products below for deeper dives after the Connected Demo:</strong>' : 'Or select individual products:'}</p>
       <div class="pill-row">
         ${PRODUCTS.map(p => `<button class="pill ${state.selectedProducts.includes(p)?'selected':''}" onclick="toggleProduct('${p}')">${p}</button>`).join('')}
       </div>
-      ${state.r360 && state.selectedProducts.length > 0 ? `<p style="font-size:11px;color:var(--power);font-weight:600;margin-top:6px">📋 Demo plan: R360 overview (15-20 min) → Deep dive on ${state.selectedProducts.join(', ')}</p>` : ''}
+      ${state.r360 && state.selectedProducts.length > 0 ? `<p style="font-size:11px;color:var(--power);font-weight:600;margin-top:6px">📋 Demo plan: Cox Connected Demo (15-20 min) → Deep dive on ${state.selectedProducts.join(', ')}</p>` : ''}
     </div>
 
     <div class="card">
@@ -473,7 +486,7 @@ function renderGamePlan() {
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
       <div>
         <h2 class="section-title">Your Game Plan</h2>
-        <p class="section-sub" style="margin-bottom:0">${state.r360?'🔄 R360 Connected Ecosystem'+(state.selectedProducts.length?' + '+state.selectedProducts.join(', ')+' deep dive'+(state.selectedProducts.length>1?'s':''):''):state.selectedProducts.join(', ')} · ${state.dealerName || 'Upcoming Demo'} · ${totalMin} min${state.r360&&state.selectedProducts.length?' (R360) + ~'+(state.selectedProducts.length*12)+' min (deep dives)':''} · ${personas.map(p=>p.emoji+' '+p.name).join(', ')}</p>
+        <p class="section-sub" style="margin-bottom:0">${state.r360?'🔄 Cox Connected Demo'+(state.selectedProducts.length?' + '+state.selectedProducts.join(', ')+' deep dive'+(state.selectedProducts.length>1?'s':''):''):state.selectedProducts.join(', ')} · ${state.dealerName || 'Upcoming Demo'} · ${totalMin} min${state.r360&&state.selectedProducts.length?' (Cox Connected Demo) + ~'+(state.selectedProducts.length*12)+' min (deep dives)':''} · ${personas.map(p=>p.emoji+' '+p.name).join(', ')}</p>
       </div>
       <div style="display:flex;gap:6px">
         <button class="btn-secondary" onclick="state.gamePlanGenerated=false;render()">← Edit Setup</button>
@@ -498,10 +511,10 @@ function renderGamePlan() {
   // Anti-pattern warnings for selected personas
   const warnings = [];
 
-  // R360 flow guide
+  // Cox Connected Demo flow guide
   if (state.r360) {
     html += `<div class="gp-section" style="border-left-color:var(--aqua)">
-      <h4 style="color:var(--aqua)">🔄 R360 Demo Flow — The Connected Ecosystem Story</h4>
+      <h4 style="color:var(--aqua)">🔄 Cox Connected Demo Flow — The Connected Ecosystem Story</h4>
       <p style="margin-bottom:10px">${R360_GUIDE.description}</p>
       ${R360_GUIDE.flow.map((step, i) => `
         <div style="margin:8px 0;padding:10px 14px;background:#fff;border-radius:8px;display:flex;gap:12px;align-items:flex-start">
@@ -518,7 +531,7 @@ function renderGamePlan() {
         <ul style="margin-top:4px">${R360_GUIDE.keyPhrases.map(p => `<li style="font-size:12px">${p}</li>`).join('')}</ul>
       </div>
       <div style="margin-top:8px;padding:10px;background:#fff5f0;border-radius:8px">
-        <strong style="font-size:11px;color:var(--orange)">R360 ANTI-PATTERNS:</strong>
+        <strong style="font-size:11px;color:var(--orange)">CONNECTED DEMO ANTI-PATTERNS:</strong>
         <ul style="margin-top:4px">${R360_GUIDE.antiPatterns.map(p => `<li style="font-size:12px;color:#c04000">${p}</li>`).join('')}</ul>
       </div>
     </div>`;
@@ -527,8 +540,8 @@ function renderGamePlan() {
   // Persona-specific warnings
   if (state.r360 && state.selectedProducts.length > 0) {
     html += `<div class="gp-section green">
-      <h4>🔎 Deep Dive Plan — After R360</h4>
-      <p style="margin-bottom:8px">After the R360 overview, transition into focused deep dives on the products the dealer needs to see in detail. Frame the transition: <em>"Now that you've seen how the ecosystem connects, let me show you the specific capabilities in [product] that address what you mentioned about [their pain point]."</em></p>
+      <h4>🔎 Deep Dive Plan — After Cox Connected Demo</h4>
+      <p style="margin-bottom:8px">After the Cox Connected Demo, transition into focused deep dives on the products the dealer needs to see in detail. Frame the transition: <em>"Now that you've seen how the ecosystem connects, let me show you the specific capabilities in [product] that address what you mentioned about [their pain point]."</em></p>
       ${state.selectedProducts.map(p => `
         <div style="margin:6px 0;padding:8px 12px;background:#fff;border-radius:6px;border-left:3px solid var(--green);display:flex;align-items:center;gap:10px">
           <span style="font-size:11px;font-weight:700;color:var(--green);white-space:nowrap">DEEP DIVE</span>
@@ -536,7 +549,7 @@ function renderGamePlan() {
           <span style="font-size:11px;color:var(--muted)">— Tailor to ${personas.map(pe=>pe.name).join(' + ')} in the room</span>
         </div>
       `).join('')}
-      <p style="margin-top:10px;font-size:11.5px;color:var(--muted)"><strong>Time tip:</strong> R360 = 15-20 min, then budget 10-15 min per deep dive product. For ${state.selectedProducts.length} deep dive${state.selectedProducts.length>1?'s':''}, total session ≈ ${20 + state.selectedProducts.length * 12} min. Adjust based on dealer engagement — if they're leaning in on one product, go deeper there and abbreviate the rest.</p>
+      <p style="margin-top:10px;font-size:11.5px;color:var(--muted)"><strong>Time tip:</strong> Cox Connected Demo 15-20 min, then budget 10-15 min per deep dive product. For ${state.selectedProducts.length} deep dive${state.selectedProducts.length>1?'s':''}, total session ≈ ${20 + state.selectedProducts.length * 12} min. Adjust based on dealer engagement — if they're leaning in on one product, go deeper there and abbreviate the rest.</p>
     </div>`;
   }
 
@@ -813,7 +826,7 @@ function generateCopilotPrompt(personas) {
   }).join('\n');
 
   const productList = state.r360
-    ? 'R360 (Full Connected Ecosystem Demo)' + (state.selectedProducts.length ? ' + Deep dives on: ' + state.selectedProducts.join(', ') : '')
+    ? 'Cox Connected Demo (Full Ecosystem)' + (state.selectedProducts.length ? ' + Deep dives on: ' + state.selectedProducts.join(', ') : '')
     : state.selectedProducts.join(', ') || 'Not specified';
 
   const personaFollowUp = personas.map(p => {
