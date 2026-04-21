@@ -437,18 +437,10 @@ function renderPhase1() {
 
     <div class="card">
       <label class="field">
-        <span class="label-text">Dealer name / group</span>
-        <input type="text" value="${state.dealerName}" onchange="state.dealerName=this.value" placeholder="e.g., Rick Morrison Automotive Group">
-      </label>
-      <label class="field">
         <span class="label-text">Time available (minutes)</span>
         <select onchange="state.demoMinutes=parseInt(this.value)">
           ${[15,20,30,45,60].map(m => `<option value="${m}" ${state.demoMinutes===m?'selected':''}>${m} min</option>`).join('')}
         </select>
-      </label>
-      <label class="field">
-        <span class="label-text">RSM brief — What did they tell you about this dealer?</span>
-        <textarea onchange="state.rsmBrief=this.value" placeholder="Current stack, pain points, reason for the meeting, anything the RSM shared...">${state.rsmBrief}</textarea>
       </label>
     </div>
 
@@ -486,7 +478,7 @@ function renderGamePlan() {
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
       <div>
         <h2 class="section-title">Your Game Plan</h2>
-        <p class="section-sub" style="margin-bottom:0">${state.r360?'🔄 Cox Connected Demo'+(state.selectedProducts.length?' + '+state.selectedProducts.join(', ')+' deep dive'+(state.selectedProducts.length>1?'s':''):''):state.selectedProducts.join(', ')} · ${state.dealerName || 'Upcoming Demo'} · ${totalMin} min${state.r360&&state.selectedProducts.length?' (Cox Connected Demo) + ~'+(state.selectedProducts.length*12)+' min (deep dives)':''} · ${personas.map(p=>p.emoji+' '+p.name).join(', ')}</p>
+        <p class="section-sub" style="margin-bottom:0">${state.r360?'🔄 Cox Connected Demo'+(state.selectedProducts.length?' + '+state.selectedProducts.join(', ')+' deep dive'+(state.selectedProducts.length>1?'s':''):''):state.selectedProducts.join(', ')} · ${totalMin} min${state.r360&&state.selectedProducts.length?' (Cox Connected Demo) + ~'+(state.selectedProducts.length*12)+' min (deep dives)':''} · ${personas.map(p=>p.emoji+' '+p.name).join(', ')}</p>
       </div>
       <div style="display:flex;gap:6px">
         <button class="btn-secondary" onclick="state.gamePlanGenerated=false;render()">← Edit Setup</button>
@@ -816,7 +808,7 @@ function renderPhase3() {
         <h3 style="margin:0">📋 Your Copilot Prompt</h3>
         <button class="btn-primary" style="padding:7px 16px;font-size:12px" onclick="copyPrompt()">Copy to Clipboard</button>
       </div>
-      <p style="font-size:11px;color:var(--muted);margin-bottom:10px">This prompt is pre-loaded with your demo context — dealer, personas, products, and RSM brief. Paste it into Claude with the recording or transcript attached.</p>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:10px">This prompt is pre-loaded with your demo context — personas, products, and names. Paste it into Claude with the recording or transcript attached.</p>
       <div id="copilotPrompt" style="background:#f5f7fa;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.7;white-space:pre-wrap;font-family:'Segoe UI',sans-serif;max-height:500px;overflow-y:auto;color:var(--text)">${escapeHtml(prompt)}</div>
     </div>
 
@@ -881,10 +873,8 @@ function generateCopilotPrompt(personas) {
 
 ═══ DEMO CONTEXT ═══
 
-Dealer: ${state.dealerName || '[Not specified]'}
 Products Demoed: ${productList}
 Time Allotted: ${state.demoMinutes} minutes
-RSM Brief Going In: ${state.rsmBrief || '[None provided]'}
 
 People in the Room:
 ${personaList}
