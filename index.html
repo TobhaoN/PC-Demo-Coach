@@ -261,7 +261,7 @@ function renderPhase3(){
   if(!personas.length)return`<div class="card"><p>Complete your Game Plan first.</p><button class="btn-primary" onclick="goPhase(1)">← Game Plan</button></div>`;
   if(state.timerRunning){clearInterval(state.timerInterval);state.timerRunning=false}
   const prompt=generateCopilotPrompt(personas);
-  return `<h2 class="section-title">Post-Demo Copilot</h2><p class="section-sub">Copy → paste into Claude with your recording → structured notes + RSM action items.</p>
+  return `<h2 class="section-title">Post-Demo Copilot</h2><p class="section-sub">Copy → paste into Copilot with your recording → structured notes + RSM action items.</p>
     <div class="card" style="border-top:3px solid var(--aqua)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
         <h3 style="margin:0">📋 Copilot Prompt</h3>
@@ -269,7 +269,7 @@ function renderPhase3(){
       </div>
       <div id="copilotPrompt" style="background:#f5f7fa;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11.5px;line-height:1.65;white-space:pre-wrap;font-family:inherit;max-height:400px;overflow-y:auto;color:var(--text)">${escapeHtml(prompt)}</div>
     </div>
-    <div class="card"><h3>How to Use</h3><p style="font-size:12px">1. Record your demo (Teams/Zoom) → 2. Copy prompt above → 3. Paste into Claude with recording → 4. Send output to RSM</p></div>
+    <div class="card"><h3>How to Use</h3><p style="font-size:12px">1. Record your demo (Teams/Zoom) → 2. Copy prompt above → 3. Paste into Copilot with recording → 4. Send output to RSM</p></div>
     <div class="card"><h3>Follow-Up by Persona</h3>
       ${personas.map(p=>{const name=state.personaNames[p.id];return`<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>${p.emoji} ${name?name+' — ':''}${p.name}:</strong> ${p.followUp}</div>`}).join('')}
     </div>`;
