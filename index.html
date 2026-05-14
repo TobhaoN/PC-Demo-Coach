@@ -6,991 +6,288 @@
 <title>PC Demo Coach — Cox Automotive MSS</title>
 <style>
 :root {
-  --trust:#1D3E74; --joyride:#024AA5; --power:#0C80DF; --aqua:#00BCDD;
-  --orange:#FF8210; --bg:#f3f5f9; --card:#fff; --text:#1a2a3a; --muted:#6b7d8e;
-  --border:#e0e5ed; --green:#1a9a5a; --red:#d44; --radius:10px;
+  --trust:#1D3E74;--joyride:#024AA5;--power:#0C80DF;--aqua:#00BCDD;
+  --orange:#FF8210;--bg:#f3f5f9;--card:#fff;--text:#1a2a3a;--muted:#6b7d8e;
+  --border:#e0e5ed;--green:#1a9a5a;--red:#d44;--radius:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:14px}
 body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;min-height:100vh}
-
-/* ─── Header ─── */
-.header{background:linear-gradient(135deg,#0d1a2e 0%,var(--trust) 100%);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.header .logo{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--power),var(--aqua));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#fff;flex-shrink:0}
-.header h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.header{background:linear-gradient(135deg,#0d1a2e 0%,var(--trust) 100%);padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.header .logo{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--power),var(--aqua));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#fff;flex-shrink:0}
+.header h1{font-size:15px;font-weight:700;color:#fff}
 .header small{font-size:10px;color:rgba(255,255,255,.4);display:block}
-.phase-tabs{display:flex;gap:4px;margin-left:auto}
-.phase-tab{padding:7px 16px;border-radius:8px;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.phase-tabs{display:flex;gap:3px;margin-left:auto}
+.phase-tab{padding:6px 14px;border-radius:8px;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
 .phase-tab:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
 .phase-tab.active{background:rgba(12,128,223,.25);color:#fff;box-shadow:inset 0 -2px 0 var(--aqua)}
-.phase-tab .num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.12);font-size:10px;margin-right:6px}
+.phase-tab .num{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.12);font-size:9px;margin-right:5px}
 .phase-tab.active .num{background:var(--aqua);color:var(--trust)}
 .phase-tab.done .num{background:var(--green);color:#fff}
-.reset-btn{padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:inherit;margin-left:8px}
+.reset-btn{padding:5px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-size:10px;cursor:pointer;font-family:inherit;margin-left:6px}
 .reset-btn:hover{border-color:var(--orange);color:var(--orange)}
-
-/* ─── Container ─── */
-.container{max-width:960px;margin:0 auto;padding:20px 24px 60px}
-
-/* ─── Cards ─── */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 1px 4px rgba(29,62,116,.04);margin-bottom:14px}
-.card h3{font-size:15px;font-weight:700;color:var(--trust);margin-bottom:8px}
+.container{max-width:900px;margin:0 auto;padding:16px 20px 50px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:0 1px 4px rgba(29,62,116,.04);margin-bottom:12px}
+.card h3{font-size:14px;font-weight:700;color:var(--trust);margin-bottom:6px}
 .card p,.card li{font-size:12.5px;color:var(--muted);line-height:1.6}
-.card ul{padding-left:18px}
-.card li{margin:3px 0}
+.card ul{padding-left:16px}
+.card li{margin:2px 0}
 .card strong{color:var(--text)}
-
-/* ─── Form elements ─── */
-label.field{display:block;margin-bottom:14px}
-label.field .label-text{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:5px;display:block}
-input[type=text],textarea,select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:var(--bg);transition:border-color .15s}
-input:focus,textarea:focus,select:focus{border-color:var(--power);background:#fff}
-textarea{resize:vertical;min-height:70px}
-
-/* ─── Persona chips ─── */
-.persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:16px}
-.persona-chip{padding:12px 14px;border-radius:10px;border:2px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s;text-align:left}
-.persona-chip:hover{border-color:var(--power);transform:translateY(-1px);box-shadow:0 4px 12px rgba(12,128,223,.1)}
-.persona-chip.selected{border-color:var(--power);background:#0C80DF0a;box-shadow:0 0 0 3px #0C80DF22}
-.persona-chip .emoji{font-size:22px;margin-bottom:4px}
-.persona-chip .name{font-size:13px;font-weight:700;color:var(--trust)}
-.persona-chip .role{font-size:11px;color:var(--muted)}
-.persona-chip .window{font-size:10px;color:var(--orange);font-weight:600;margin-top:3px}
-
-/* ─── Product pills ─── */
-.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.pill{padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-size:11.5px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;color:var(--muted)}
+label.field{display:block;margin-bottom:12px}
+label.field .label-text{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;display:block}
+select,input[type=text]{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:12.5px;font-family:inherit;outline:none;background:var(--bg);transition:border-color .15s}
+select:focus,input:focus{border-color:var(--power);background:#fff}
+.persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:10px}
+.persona-chip{padding:10px 12px;border-radius:8px;border:2px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s;text-align:left}
+.persona-chip:hover{border-color:var(--power);box-shadow:0 2px 8px rgba(12,128,223,.08)}
+.persona-chip.selected{border-color:var(--power);background:#0C80DF08}
+.persona-chip .emoji{font-size:18px}
+.persona-chip .name{font-size:12px;font-weight:700;color:var(--trust)}
+.persona-chip .role{font-size:10px;color:var(--muted)}
+.pill-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.pill{padding:4px 12px;border-radius:18px;border:1.5px solid var(--border);background:var(--card);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;color:var(--muted)}
 .pill:hover{border-color:var(--power);color:var(--power)}
 .pill.selected{background:var(--power);color:#fff;border-color:var(--power)}
-
-/* ─── Game Plan output ─── */
-.gp-section{margin-bottom:18px;padding:16px;border-radius:10px;border-left:4px solid var(--power);background:#f8fafc}
-.gp-section.warning{border-left-color:var(--orange);background:#fffaf5}
-.gp-section.green{border-left-color:var(--green);background:#f5fdf8}
-.gp-section h4{font-size:13px;font-weight:700;color:var(--trust);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.gp-section p,.gp-section li{font-size:12.5px;line-height:1.65}
-.gp-section ul{padding-left:16px}
-.gp-section li{margin:4px 0}
-.gp-section .quote{font-style:italic;color:var(--joyride);border-left:3px solid var(--power);padding:4px 10px;margin:8px 0;background:#fff;border-radius:0 6px 6px 0;font-size:12px}
-
-/* ─── Time budget bar ─── */
-.time-bar{display:flex;border-radius:6px;overflow:hidden;height:28px;margin:10px 0;font-size:10px;font-weight:700;color:#fff}
-.time-bar .seg{display:flex;align-items:center;justify-content:center;transition:width .3s}
-.seg-discovery{background:var(--aqua)}
-.seg-demo{background:var(--power)}
-.seg-close{background:var(--green)}
-
-/* ─── Live Reference ─── */
-.live-panel{background:var(--card);border:2px solid var(--power);border-radius:14px;overflow:hidden}
-.live-header{background:linear-gradient(90deg,var(--trust),var(--joyride));padding:12px 16px;color:#fff;display:flex;align-items:center;gap:12px}
-.live-timer{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
-.live-phase-label{font-size:11px;font-weight:600;opacity:.7}
-.live-body{padding:16px}
-.timer-controls{display:flex;gap:6px;margin-left:auto}
-.timer-btn{padding:5px 14px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.pill.sub{font-size:10px;padding:3px 10px;margin-left:8px;border-style:dashed}
+.gp-block{padding:10px 12px;border-radius:8px;margin-bottom:8px;font-size:12px;line-height:1.6}
+.gp-block.blue{background:#f0f7ff;border-left:3px solid var(--power)}
+.gp-block.green{background:#f0fdf5;border-left:3px solid var(--green)}
+.gp-block.orange{background:#fffaf5;border-left:3px solid var(--orange)}
+.gp-block.aqua{background:#f0fafc;border-left:3px solid var(--aqua)}
+.gp-block h4{font-size:12px;font-weight:700;color:var(--trust);margin-bottom:4px}
+.gp-block ul{padding-left:14px;margin:2px 0}
+.gp-block li{margin:2px 0}
+.gp-block .q{color:var(--joyride);font-weight:600}
+.time-bar{display:flex;border-radius:5px;overflow:hidden;height:22px;margin:6px 0;font-size:9px;font-weight:700;color:#fff}
+.time-bar .seg{display:flex;align-items:center;justify-content:center}
+.seg-disc{background:var(--aqua)}.seg-demo{background:var(--power)}.seg-close{background:var(--green)}
+.live-panel{background:var(--card);border:2px solid var(--power);border-radius:12px;overflow:hidden}
+.live-header{background:linear-gradient(90deg,var(--trust),var(--joyride));padding:10px 14px;color:#fff;display:flex;align-items:center;gap:10px}
+.live-timer{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.live-body{padding:12px}
+.timer-btn{padding:4px 12px;border-radius:5px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit}
 .timer-btn:hover{background:rgba(255,255,255,.2)}
-.live-card{padding:12px;border-radius:8px;margin-bottom:10px;font-size:12.5px;line-height:1.6}
-.live-card.prompt{background:#f0f7ff;border-left:3px solid var(--power)}
-.live-card.warning{background:#fff5f0;border-left:3px solid var(--orange)}
-.live-card.checkpoint{background:#f0fff5;border-left:3px solid var(--green)}
-.live-card h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.live-card h5.blue{color:var(--power)}
-.live-card h5.orange{color:var(--orange)}
-.live-card h5.green{color:var(--green)}
-
-/* ─── Debrief ─── */
-.score-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
-.score-row:last-child{border-bottom:none}
-.score-label{flex:1;font-size:12.5px;font-weight:600;color:var(--text)}
-.score-btns{display:flex;gap:4px}
-.score-btn{width:32px;height:32px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);transition:all .15s;font-family:inherit}
-.score-btn:hover{border-color:var(--power);color:var(--power)}
-.score-btn.active-1{background:#fee;border-color:var(--red);color:var(--red)}
-.score-btn.active-2{background:#fff5e6;border-color:var(--orange);color:var(--orange)}
-.score-btn.active-3{background:#f0f7ff;border-color:var(--power);color:var(--power)}
-.score-btn.active-4{background:#e6fff0;border-color:var(--green);color:var(--green)}
-.score-btn.active-5{background:#d4f5e0;border-color:#0a7a3a;color:#0a7a3a}
-
-.btn-primary{padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--power),var(--joyride));color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;box-shadow:0 2px 8px rgba(12,128,223,.2)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(12,128,223,.3)}
+.lp{padding:10px 14px;border-radius:8px;margin-bottom:8px;font-size:13px;line-height:1.5}
+.lp.ask{background:#f0f7ff;border-left:3px solid var(--power)}
+.lp.warn{background:#fff5f0;border-left:3px solid var(--orange)}
+.lp.do{background:#f0fdf5;border-left:3px solid var(--green)}
+.lp .tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;display:block}
+.lp .tag.blue{color:var(--power)}.lp .tag.orange{color:var(--orange)}.lp .tag.green{color:var(--green)}
+.lp .big{font-size:15px;font-weight:700;color:var(--trust)}
+.btn-primary{padding:8px 20px;border-radius:7px;border:none;background:linear-gradient(135deg,var(--power),var(--joyride));color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(12,128,223,.2)}
+.btn-primary:hover{transform:translateY(-1px)}
 .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn-secondary{padding:8px 18px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-secondary{padding:6px 14px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
 .btn-secondary:hover{border-color:var(--power);color:var(--power)}
-
-.section-title{font-size:18px;font-weight:800;color:var(--trust);margin-bottom:4px}
-.section-sub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
-
-/* ─── Anti-pattern alert ─── */
-.antipattern{background:#fff5f0;border:1px solid #ffddcc;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px;display:flex;gap:8px;align-items:flex-start}
-.antipattern .icon{font-size:16px;flex-shrink:0;margin-top:1px}
-.antipattern strong{color:#c04000}
-
-/* ─── Responsive ─── */
-@media(max-width:768px){
-  .phase-tabs{flex-wrap:wrap;gap:3px}
-  .phase-tab{padding:6px 10px;font-size:11px}
-  .persona-grid{grid-template-columns:1fr 1fr}
-  .container{padding:14px}
-}
+.section-title{font-size:16px;font-weight:800;color:var(--trust);margin-bottom:3px}
+.section-sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+.flow-step{display:flex;gap:10px;align-items:flex-start;margin:6px 0;padding:8px 10px;background:#fff;border-radius:6px}
+.flow-num{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--power),var(--aqua));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.flow-step .products{font-size:10px;color:var(--aqua);font-weight:600}
+@media(max-width:768px){.phase-tabs{flex-wrap:wrap;gap:2px}.phase-tab{padding:5px 8px;font-size:10px}.persona-grid{grid-template-columns:1fr 1fr}.container{padding:10px}}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="logo">DC</div>
-  <div>
-    <h1>Demo Coach</h1>
-    <small>Cox Automotive MSS — PC Coaching Tool</small>
-  </div>
+  <div><h1>Demo Coach</h1><small>Cox Automotive MSS</small></div>
   <div class="phase-tabs">
     <button class="phase-tab active" onclick="goPhase(1)" data-phase="1"><span class="num">1</span>Game Plan</button>
-    <button class="phase-tab" onclick="goPhase(2)" data-phase="2"><span class="num">2</span>Live Reference</button>
+    <button class="phase-tab" onclick="goPhase(2)" data-phase="2"><span class="num">2</span>Live</button>
     <button class="phase-tab" onclick="goPhase(3)" data-phase="3"><span class="num">3</span>Copilot</button>
   </div>
   <button class="reset-btn" onclick="resetAll()">Reset</button>
 </div>
-
 <div class="container" id="app"></div>
-
 <script>
-// ═══════════════════════════════════════
-// PERSONA DATA (from dealer persona validation)
-// ═══════════════════════════════════════
-const PERSONAS = {
-  gm: {
-    id:'gm', emoji:'👔', name:'General Manager', role:'P&L owner, decision-maker',
-    window:'5-7 min', windowNum:6,
-    language:['P&L','net profit','management visibility','CSI','employee retention'],
-    decisionDriver:'Management insight — "How will I know if my people are doing their job?"',
-    openingQ:'"When you pull up yesterday\'s numbers, what\'s the first thing that makes you either smile or reach for the Advil?"',
-    demoFrame:'Show the MANAGEMENT view, not the user view. Reports, dashboards, team accountability — not button clicks.',
-    outcomeFrame:'"Here\'s how you\'ll KNOW your people are doing their job."',
-    followUp:'Short email — 3 paragraphs max. Recap pain points mentioned, propose clear next step with date. Attach nothing.',
-    closeLanguage:'"Can I bring your GSM and internet director on a 30-minute call next [day] to show them the piece relevant to their world?"',
-    fatalMistakes:['Showing the user view instead of management/reporting view','Opening with company overview slides','Sending a proposal before it\'s requested','Using a trial close ("On a scale of 1-10...")'],
-    goldenInsight:'Tom doesn\'t buy software. He buys management visibility. Every feature must answer: "How will I know if my people are doing their job?"'
-  },
-  dp: {
-    id:'dp', emoji:'🏢', name:'Dealer Principal / Owner', role:'Owns the business, big-picture, ROI-obsessed',
-    window:'5 min', windowNum:5,
-    language:['ROI','total cost of ownership','market share','customer retention','competitive advantage','growth'],
-    decisionDriver:'Business growth — "Will this help me sell more cars, retain more customers, or reduce costs?"',
-    openingQ:'"What\'s the biggest challenge you\'re facing right now that\'s keeping you from hitting your growth targets?"',
-    demoFrame:'Don\'t demo features — tell a business story. Show market position, competitive edge, customer lifecycle revenue. The DP doesn\'t click buttons, they sign checks.',
-    outcomeFrame:'"Here\'s how this impacts your bottom line and competitive position."',
-    followUp:'Brief email to the DP and a separate detailed follow-up to whoever they delegate evaluation to. The DP approves, someone else evaluates.',
-    fatalMistakes:['Treating them like a GM — DPs think bigger and broader','Getting into feature-level detail they\'ll never use','Not knowing their group size and brand mix','Ignoring that they\'ll delegate the evaluation to someone else'],
-    goldenInsight:'The DP writes the check but delegates the evaluation. Your demo needs to create executive excitement (for the DP) AND operational confidence (for whoever they assign to vet it). Win both audiences or win neither.'
-  },
-  gsm: {
-    id:'gsm', emoji:'🏪', name:'General Sales Manager', role:'Runs the floor, tactical, in the trenches',
-    window:'3 min', windowNum:3,
-    language:['close rate','gross','ups','deals','accountability','who\'s working'],
-    decisionDriver:'Speed + accountability — "Will this help me catch the deal before it walks?"',
-    openingQ:'"How many ups did you have yesterday, and how many of those left without a pencil?"',
-    demoFrame:'Show a deal in motion. "Saturday morning, lot\'s full, customer submitted a lead on a used F-150 at 47 days — here\'s what happens." Kitchen during dinner rush, not a tour of the house.',
-    outcomeFrame:'"Here\'s how you catch the deal before it walks."',
-    followUp:'TEXT, not email. Reference something specific. "Hey Marcus — that lead response thing we showed — want to get Sarah and a couple guys on a quick call Thursday?"',
-    closeLanguage:'"Can we get two of your top salespeople and your BDC manager on a 20-minute call? I\'ll show them the daily workflow and you can see if they\'d actually use it."',
-    fatalMistakes:['Going slow — match their energy','Talking about "long-term vision" or "digital strategy"','Demoing slowly through a linear feature walkthrough','Sending pricing before it\'s been asked for'],
-    goldenInsight:'Marcus is tactical, not strategic. Don\'t talk vision — talk about closing the deal on his desk RIGHT NOW. Match his energy or lose him.'
-  },
-  internet: {
-    id:'internet', emoji:'💻', name:'Internet / BDC Director', role:'Systems architect, data-driven, tech-savvy',
-    window:'7-8 min', windowNum:7,
-    language:['data flow','API','attribution','lead-to-engagement gap','integration architecture'],
-    decisionDriver:'Technical integration — "How does this fit in my ecosystem without manual steps?"',
-    openingQ:'"When a customer submits a lead on your website at 9 PM Thursday, what happens between that moment and when a human engages — and where does it break down?"',
-    demoFrame:'Show the customer JOURNEY through connected systems, not individual product features. Data flowing between Autotrader → VinSolutions → Dealer.com with enrichment at each step.',
-    outcomeFrame:'"Here\'s how the data flows without manual steps."',
-    followUp:'Email with substance: integration points summary, API docs or developer portal links, case study from similar tech stack, proposed timeline for technical deep-dive. Give homework.',
-    closeLanguage:'"Can we do a data mapping session where we look at your current stack and identify the specific integration points?"',
-    fatalMistakes:['Vague integration answers ("We integrate with all major platforms")','Marketing buzzwords without technical depth','Not knowing how your API actually works','Overselling integration capabilities — they WILL verify'],
-    goldenInsight:'Mike is the technical gatekeeper. If you can\'t answer integration questions with specificity, he\'ll torpedo the deal regardless of how much the GM loves the product.'
-  },
-  fixedops: {
-    id:'fixedops', emoji:'🔧', name:'Fixed Ops Director', role:'Service & parts leader, retention-focused',
-    window:'10 min', windowNum:10,
-    language:['effective labor rate','hours per RO','absorption rate','customer retention','CP vs warranty mix'],
-    decisionDriver:'Retention + profitability — "How do I get sold customers back for first service?"',
-    openingQ:'"What percentage of your sold customers come back for their first service visit, and how confident are you in that number?"',
-    demoFrame:'Show the retention lifecycle: customer buys → CRM captures vehicle → Xtime schedules at right interval → customer returns. Connect sale to service lane.',
-    outcomeFrame:'"Here\'s how you get the customer back for their first service."',
-    followUp:'Case study from similar group (multi-rooftop, multi-brand, same DMS) with measurable KPIs. Include real implementation timeline — what broke, how training worked during business hours, 90-day adoption rate.',
-    closeLanguage:'"Can we schedule 30 minutes with your [store] service manager to walk through the advisor workflow?"',
-    fatalMistakes:['Making service the "speed round" at the end of the demo','Starting with sales content and bolting on service as afterthought','Saying "and of course, we also have a service scheduling tool..."','Not knowing fixed ops KPIs (ELR, hours/RO, absorption)'],
-    goldenInsight:'David is the most underserved persona in the demo room. Fixed ops = ~50% of gross profit but gets ~10% of demo airtime. Leading with service earns massive differentiation. Win David and he champions your product for years.'
-  },
-  usedcar: {
-    id:'usedcar', emoji:'🚗', name:'Used Car Manager', role:'Inventory-obsessed, time is money',
-    window:'2 min', windowNum:2,
-    language:['turn time','days to front-line','gross','market data','acquisition','recon'],
-    decisionDriver:'Time + money — "How do I move cars faster and make more per unit?"',
-    openingQ:'"How many days are you averaging from acquisition to front-line ready, and what\'s the one bottleneck killing your turn time?"',
-    demoFrame:'Pull up a REAL VIN from their lot. Show a specific pricing insight they don\'t have. "This 2022 Escape at 38 days — you\'re priced $800 above market but undervaluing the trim differential."',
-    outcomeFrame:'"Here\'s money on real units on your lot."',
-    followUp:'Text with one actionable insight: "Hey Carlos — that 2021 Bronco Sport at 52 days? Market shifted. Drop to $23,500 and you move it this weekend."',
-    closeLanguage:'"Let me come by the store for an hour and do a lot walk with your inventory. I\'ll show you unit-level opportunities."',
-    fatalMistakes:['Wasting time on process diagrams','Demoing in a conference room when you should be in the lane','Showing CRM/lead management features (not their world)','Making it longer than 15 minutes'],
-    goldenInsight:'Carlos doesn\'t buy tools — he buys time and money. Bring VIN-specific data from his actual inventory. Best demos happen standing up, not sitting down. Keep it under 15 minutes.'
-  },
-  fi: {
-    id:'fi', emoji:'📋', name:'F&I Director', role:'Revenue + compliance dual lens',
-    window:'8 min', windowNum:8,
-    language:['PVR','compliance','chargebacks','funding speed','deal structure','lender requirements'],
-    decisionDriver:'Revenue + compliance — "Does this make me more money AND keep me legal?"',
-    openingQ:'"When you\'re reviewing deal jackets at month-end, what\'s the most common error creating compliance risk or chargeback exposure?"',
-    demoFrame:'Use a REALISTIC credit scenario — 620 score, Tier 3, used vehicle. Show how the system adjusts menu to lender requirements, flags rate markup caps, and calculates backend reserve. Never use a perfect-credit customer.',
-    outcomeFrame:'"Here\'s how this keeps you legal AND profitable."',
-    followUp:'Compliance-focused case study from a multi-store group. Metrics: funding speed impact, chargeback reduction, transition timeline. Reference from another F&I Director they can call.',
-    closeLanguage:'"Can we schedule a session with two of your F&I managers who have different styles? I\'ll walk them through a deal in their specific scenario."',
-    fatalMistakes:['Demoing with a perfect-credit customer scenario','Leading with revenue promises without compliance framework','Treating F&I as just a "menu presentation"','Giving F&I the last 5 minutes of a 60-minute demo'],
-    goldenInsight:'Trish evaluates through a dual lens: revenue AND compliance. Open with compliance, then layer revenue. The PC who leads with "here\'s how this protects your dealership" beats the one who leads with PVR numbers every time.'
-  },
-  controller: {
-    id:'controller', emoji:'📊', name:'Controller / CFO', role:'Accounting-minded, accuracy + cost focused',
-    window:'Pre-meeting or never', windowNum:0,
-    language:['reconciliation','posting accuracy','GL coding','total cost of ownership','manual touchpoints','month-end close'],
-    decisionDriver:'Accuracy + cost reduction — "Does this reduce manual work and errors in my back office?"',
-    openingQ:'"Across your stores, how many hours per month does your team spend on manual reconciliation between what the sales floor says happened and what actually posted to the DMS?"',
-    demoFrame:'Show what happens AFTER the deal is signed. Contract data → DMS posting → GL coding. Show where double entries currently happen and how the tool eliminates them.',
-    outcomeFrame:'"Here\'s how this reduces manual touchpoints in your deal processing."',
-    followUp:'TCO analysis: implementation cost, monthly cost across all stores, estimated labor savings in hours/month/store, error rate reduction, realistic implementation timeline that avoids month-end close periods.',
-    closeLanguage:'"Can we schedule a walkthrough with your [store] office manager where we trace a deal from desk to posting and identify the manual touchpoints?"',
-    fatalMistakes:['Forgetting the Controller exists','Spending the whole demo on sales-floor features','Not knowing the total cost when asked','Saying "we integrate with CDK" without specifying what data, what direction, what frequency'],
-    goldenInsight:'Maggie controls the checkbook and catches every mistake the front of house makes. If you sell to the GM and ignore the Controller, she\'ll find every integration flaw and hidden cost — and kill the deal with a spreadsheet.'
-  },
-  marketing: {
-    id:'marketing', emoji:'📣', name:'Marketing Director', role:'Digital strategy, lead gen, brand, ROI on ad spend',
-    window:'7-8 min', windowNum:7,
-    language:['CPL','attribution','SEO','SEM','lead quality','conversion rate','ad spend ROI','brand consistency'],
-    decisionDriver:'Lead generation ROI — "Is this driving more quality leads for less money?"',
-    openingQ:'"When you look at your lead sources this month, which channel is giving you the best cost-per-lead — and which one are you most frustrated with?"',
-    demoFrame:'Show the marketing funnel end-to-end: DDC Advertising driving traffic → Dealer.com converting visitors → VinSolutions capturing leads enriched with AT/KBB data → AMP re-engaging past customers. Focus on attribution and measurability.',
-    outcomeFrame:'"Here\'s how you\'ll see exactly which marketing dollars are driving deals."',
-    followUp:'Email with performance data: attribution model overview, sample campaign analytics, case study from similar-sized dealer showing CPL improvement and lead quality lift. Include a proposed 30-day pilot framework.',
-    closeLanguage:'"Can we schedule a session where I walk your marketing team through the attribution dashboard with your actual data? I want to show you where the gaps are in your current lead tracking."',
-    fatalMistakes:['Skipping attribution — marketing directors need to prove ROI to the GM','Talking about features without connecting to lead gen metrics','Ignoring their current agency relationship (they may have one they like)','Not knowing the difference between DDC Advertising and Dealer.com managed services'],
-    goldenInsight:'The Marketing Director lives and dies by lead quality and attribution. They need to prove to the GM that every dollar spent is working. Show them closed-loop attribution from ad impression to sold deal — that\'s the story that gets their buy-in and budget approval.'
-  }
-};
+const PERSONAS={dp:{id:'dp',emoji:'🏛️',name:'Dealer Principal / Owner',role:'Owner, big-picture, ROI-obsessed',language:['ROI','market share','brand reputation','headcount efficiency'],openingQ:'"What\'s the biggest challenge facing your stores right now that technology should be solving but isn\'t?"',productQs:{'VinSolutions':'"How confident are you that your CRM is capturing every opportunity?"','vAuto':'"Are you satisfied with your used car turn rate across all stores?"','Dealer.com':'"Is your website generating leads on its own, or is it just a digital brochure?"','Deal Central':'"How much gross are you leaving on the table when customers know more than your salespeople?"','Dealertrack DMS':'"What are you paying monthly just to connect your systems together?"','AMP':'"Do you know which previous customers are shopping right now — before they tell you?"'},demoFrame:'Show ROI and competitive advantage. Management dashboards, not user workflows.',followUp:'Short email to RSM with ROI summary. DPs decide fast — don\'t let momentum stall.',goldenInsight:'DPs think in terms of the whole business, not departments. Show portfolio-level impact.'},gm:{id:'gm',emoji:'👔',name:'General Manager',role:'P&L owner, management visibility',language:['net profit','management visibility','CSI','accountability'],openingQ:'"When you pull up yesterday\'s numbers, what makes you smile or reach for the Advil?"',productQs:{'VinSolutions':'"How do you know if your salespeople are working leads vs. cherry-picking?"','vAuto':'"When a unit hits 45 days, how quickly does your team react?"','Dealer.com':'"Can you see which CRM customers are shopping your website right now?"','Deal Central':'"What happens when a customer walks in knowing more about the deal than your salesperson?"','Dealertrack DMS':'"How many hours does your back office spend reconciling what the floor says happened?"','Xtime':'"What percentage of sold customers come back for first service?"','AMP':'"How are you marketing to customers shopping but haven\'t raised their hand?"'},demoFrame:'Show MANAGEMENT view — reports, dashboards, accountability. Not the user screen.',followUp:'Short email — 3 paragraphs max. Recap pain points. Propose specific next step.',goldenInsight:'GMs buy management visibility. Every feature must answer: "How will I know if my people are doing their job?"'},gsm:{id:'gsm',emoji:'🏪',name:'General Sales Manager',role:'Runs the floor, tactical, fast-paced',language:['close rate','gross','ups','deals','accountability'],openingQ:'"How many ups did you have yesterday, and how many left without a pencil?"',productQs:{'VinSolutions':'"When a lead comes in, how fast does your team actually touch it?"','Deal Central':'"What does your salesperson do when a customer already knows the price, payment, and trade?"','Dealer.com':'"When someone starts a deal on your website, does your team know before they walk in?"'},demoFrame:'Show a deal in motion. Saturday morning scenario. Fast, deal-focused. Match their energy.',followUp:'TEXT, not email. Reference something specific from the demo.',goldenInsight:'3-minute attention window. Tactical, not strategic. Show how to catch the deal before it walks.'},internet:{id:'internet',emoji:'💻',name:'Internet / BDC Director',role:'Systems architect, data-driven',language:['data flow','API','attribution','lead response time','integration'],openingQ:'"When a lead comes in at 9 PM Thursday, what happens between that moment and when a human engages — where does it break?"',productQs:{'VinSolutions':'"How are you tracking attribution from lead source through to sold?"','Dealer.com':'"What does your website analytics tell you about conversion — do you trust the numbers?"','AMP':'"How do you know which marketing channel actually drove the sale?"','DDC Advertising':'"Can you see closed-loop attribution from ad impression to delivered unit?"'},demoFrame:'Show the data JOURNEY through connected systems. Integration architecture, not feature tours.',followUp:'Email with substance: integration points, API docs, case study from similar tech stack.',goldenInsight:'Technical gatekeeper. Vague integration answers kill trust. Bring specifics or lose credibility.'},fixedops:{id:'fixedops',emoji:'🔧',name:'Fixed Ops Director',role:'Service & parts, retention-focused',language:['ELR','hours per RO','absorption rate','customer retention'],openingQ:'"What percentage of sold customers come back for first service, and how confident are you in that number?"',productQs:{'Xtime':'"How are you managing capacity during peak hours — are customers self-scheduling?"','VinSolutions':'"When a service customer is in the market for a new vehicle, how does sales find out?"','Dealertrack DMS':'"How does service data flow to accounting — any manual reconciliation?"'},demoFrame:'Show the retention lifecycle: buy → service → re-engage. Connect sale to service lane.',followUp:'Case study from similar group with KPIs: retention rate, RO count, ELR improvement.',goldenInsight:'Fixed ops = ~50% of gross profit but gets ~10% of demo airtime. Leading with service earns massive differentiation.'},usedcar:{id:'usedcar',emoji:'🚗',name:'Used Car Manager',role:'Inventory-obsessed, time is money',language:['turn time','days to front-line','gross','market data','recon'],openingQ:'"What\'s your average days from acquisition to front-line, and what\'s the bottleneck killing your turn?"',productQs:{'vAuto':'"Show me a unit that\'s been here 40+ days — what does your pricing strategy look like?"','VinSolutions':'"Can you see which CRM leads are tied to specific inventory when you\'re pricing?"','Dealer.com':'"How quickly do price changes hit your website and third-party listings?"'},demoFrame:'Pull up REAL VINs from their lot. Show specific pricing insights. Keep it under 15 min.',followUp:'Text with one actionable insight on a real unit. Prove value before they sign.',goldenInsight:'2-minute attention window. Bring VIN-specific data. Every second not about speed or profit is a second they\'re leaving.'},fi:{id:'fi',emoji:'📋',name:'F&I Director',role:'Revenue + compliance dual lens',language:['PVR','compliance','chargebacks','funding speed','deal structure'],openingQ:'"When you review deal jackets at month-end, what\'s the most common error creating compliance risk?"',productQs:{'UNIFI / F&I':'"Walk me through a 620-score customer on a used vehicle — how does your current process handle lender requirements?"','Deal Central':'"When a deal comes to F&I, how much data do you have to re-enter?"','Dealertrack DMS':'"How long from F&I completion to funding — days or weeks?"'},demoFrame:'Use a REALISTIC credit scenario (620 score, Tier 3). Never demo with a perfect customer.',followUp:'Compliance-focused case study. Metrics: funding speed, chargeback reduction.',goldenInsight:'Open with compliance, then layer revenue. Leading with "how this protects your dealership" wins.'},controller:{id:'controller',emoji:'📊',name:'Controller / CFO',role:'Accuracy, cost, reconciliation',language:['reconciliation','posting accuracy','GL coding','TCO','manual touchpoints'],openingQ:'"How many hours per month does your team spend reconciling what the sales floor says happened vs. what posted to the DMS?"',productQs:{'Dealertrack DMS':'"What are you paying in integration fees to connect your CRM, website, and inventory tools?"','VinSolutions':'"When a deal is marked sold in the CRM, how long until it shows in your books — and is it accurate?"'},demoFrame:'Show what happens AFTER the deal. Data flow to DMS, GL coding, error reduction.',followUp:'TCO analysis: implementation cost, labor savings in hours/month/store, error rate reduction.',goldenInsight:'Controllers are forgotten in demos. She controls the budget and catches every mistake.'},marketing:{id:'marketing',emoji:'📣',name:'Marketing Director',role:'Lead gen, attribution, ad spend ROI',language:['CPL','attribution','SEO','lead quality','conversion rate','ad spend ROI'],openingQ:'"Which lead source gives you the best cost-per-lead this month — and which one frustrates you most?"',productQs:{'DDC Advertising':'"Can you see which ads are driving sold units — not just clicks?"','Dealer.com':'"What\'s your website conversion rate, and what are you doing to improve it?"','AMP':'"How are you re-engaging past customers before they shop a competitor?"'},demoFrame:'Show the full marketing funnel with attribution at every step. DDC → Dealer.com → VinSolutions → AMP.',followUp:'Email with campaign analytics, CPL benchmarks, case study showing lead quality improvement.',goldenInsight:'Marketing Directors live and die by attribution. Show closed-loop tracking from ad impression to sold deal.'}};
+const PRODUCTS=[{id:'VinSolutions',label:'VinSolutions'},{id:'vAuto',label:'vAuto'},{id:'Dealer.com',label:'Dealer.com'},{id:'Deal Central',label:'Deal Central'},{id:'Dealertrack DMS',label:'Dealertrack DMS'},{id:'Xtime',label:'Xtime'},{id:'AMP',label:'AMP'},{id:'DDC Advertising',label:'DDC Advertising',subs:['AMD','AMD Elite']},{id:'UNIFI / F&I',label:'UNIFI / F&I'}];
+const CONNECTED_FLOW=[{phase:'Consumer Shopping',time:'2-3m',products:'Autotrader + Dealer.com + DDC Advertising',script:'Customer shops AT/KBB → DDC targets with VIN-level ads → lands on Dealer.com with personalized payments, no login required.'},{phase:'Inventory & Pricing',time:'2-3m',products:'vAuto + Dealer.com + Autotrader',script:'vAuto prices with Profit Time AI + Manheim/AT/KBB data. Prices flow to website and listings in real time.'},{phase:'Lead & Engagement',time:'2-3m',products:'Dealer.com + VinSolutions + AMP',script:'Lead arrives enriched with AT/KBB shopping data. Predictive Insights scores it. AMP shows browsing behavior. Salesperson sees it all on the task page.'},{phase:'Deal Building',time:'3-4m',products:'VinSolutions + Deal Central',script:'Deal Central builds transparent proposal. Online-to-showroom continuity. One deal, one data set, zero re-entry.'},{phase:'F&I + DMS',time:'2-3m',products:'Deal Central + UNIFI + Dealertrack DMS',script:'Deal flows to F&I — no re-keying. UNIFI handles lenders + compliance. Posts to DMS with proper GL coding. Funding: 28 days → 48 hours.'},{phase:'Service + Loop',time:'2-3m',products:'Xtime + VinSolutions + AMP + vAuto',script:'Xtime schedules first service. Service drive becomes acquisition channel via KBB ICO. AMP re-engages when they shop again. The loop closes.'}];
+let state={phase:1,r360:false,selectedPersonas:[],personaNames:{},selectedProducts:[],selectedSubs:{},demoMinutes:30,gamePlanGenerated:false,timerRunning:false,timerSeconds:0,timerInterval:null};
+function goPhase(n){state.phase=n;document.querySelectorAll('.phase-tab').forEach(t=>t.classList.toggle('active',t.dataset.phase==n));render()}
+function resetAll(){if(state.timerInterval)clearInterval(state.timerInterval);state={phase:1,r360:false,selectedPersonas:[],personaNames:{},selectedProducts:[],selectedSubs:{},demoMinutes:30,gamePlanGenerated:false,timerRunning:false,timerSeconds:0,timerInterval:null};document.querySelectorAll('.phase-tab').forEach(t=>{t.classList.remove('done');t.classList.toggle('active',t.dataset.phase=='1')});render()}
+function togglePersona(id){const i=state.selectedPersonas.indexOf(id);if(i>-1)state.selectedPersonas.splice(i,1);else state.selectedPersonas.push(id);render()}
+function toggleProduct(id){const i=state.selectedProducts.indexOf(id);if(i>-1)state.selectedProducts.splice(i,1);else state.selectedProducts.push(id);render()}
+function toggleSub(parent,sub){if(!state.selectedSubs[parent])state.selectedSubs[parent]=[];const i=state.selectedSubs[parent].indexOf(sub);if(i>-1)state.selectedSubs[parent].splice(i,1);else state.selectedSubs[parent].push(sub);render()}
+function toggleR360(){state.r360=!state.r360;if(state.r360)state.demoMinutes=20;render()}
+function toggleTimer(){if(state.timerRunning){clearInterval(state.timerInterval);state.timerRunning=false}else{state.timerRunning=true;state.timerInterval=setInterval(()=>{state.timerSeconds++;render()},1000)}render()}
+function resetTimer(){clearInterval(state.timerInterval);state.timerRunning=false;state.timerSeconds=0;render()}
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function generateGamePlan(){state.gamePlanGenerated=true;document.querySelector('[data-phase="1"]').classList.add('done');render()}
 
-const PRODUCTS = ['VinSolutions','vAuto','Dealer.com','Deal Central','Dealertrack DMS','Xtime','AMP','DDC Advertising','AMD / AMD Elite','UNIFI / F&I'];
-
-// Product-specific discovery questions (weave throughout demo, not just upfront)
-const PRODUCT_QUESTIONS = {
-  'VinSolutions': [
-    '"How are your salespeople following up with leads today — is there a consistent process or does it vary by person?"',
-    '"When a customer visits your website, can your sales team see that activity in the CRM?"',
-    '"How do you hold your team accountable for working their leads and follow-up tasks?"'
-  ],
-  'vAuto': [
-    '"How many days are you averaging from acquisition to front-line ready?"',
-    '"How are you pricing — gut feel, market data, or a combination?"',
-    '"Are you sourcing from your service drive or just auctions and trade-ins?"'
-  ],
-  'Dealer.com': [
-    '"When a customer visits your website, can they see real payments without creating an account?"',
-    '"How quickly do price changes from your inventory tool show up on your website?"',
-    '"What\'s your biggest frustration with your current website provider?"'
-  ],
-  'Deal Central': [
-    '"When a customer comes in already knowing the price from their phone, how does your team handle that conversation?"',
-    '"How many times does deal info get re-entered between your sales desk and F&I?"',
-    '"What happens when a customer starts a deal online — can your team pick that up in-store?"'
-  ],
-  'Dealertrack DMS': [
-    '"What are you paying monthly in integration fees to connect your CRM, website, and other tools to your DMS?"',
-    '"How long does it take from F&I completion to deal funding?"',
-    '"How many manual reconciliation steps does your accounting team deal with each month?"'
-  ],
-  'Xtime': [
-    '"What percentage of your sold customers come back for their first service visit?"',
-    '"How are you using your service drive to source inventory?"',
-    '"When a service customer is in the market for a new vehicle, how does your sales team find out?"'
-  ],
-  'AMP': [
-    '"How are you identifying customers who are shopping before they submit a lead?"',
-    '"What does your customer lifecycle marketing look like — time-based or behavior-based?"',
-    '"How do your salespeople know when a past customer is back in the market?"'
-  ],
-  'DDC Advertising': [
-    '"Do you know your true cost-per-lead by channel right now?"',
-    '"Can you trace an ad impression all the way to a sold deal?"',
-    '"What\'s your biggest frustration with your current digital advertising?"'
-  ],
-  'AMD / AMD Elite': [
-    '"How are you merchandising your inventory online — photos, descriptions, pricing?"',
-    '"Are your online listings consistent across your website, Autotrader, and other channels?"',
-    '"How much time does your team spend on vehicle merchandising each week?"'
-  ],
-  'UNIFI / F&I': [
-    '"How long does your contracting process take from desk to funded deal?"',
-    '"What\'s your chargeback rate look like, and what\'s driving it?"',
-    '"How many lender portals does your F&I team log into daily?"'
-  ]
-};
-
-const R360_PRODUCTS = ['Autotrader','Dealer.com','VinSolutions','vAuto','Deal Central','Dealertrack DMS','Xtime','AMP','DDC Advertising','AMD / AMD Elite','UNIFI / F&I'];
-
-const R360_GUIDE = {
-  name: 'Cox Connected Demo',
-  time: '15-20 min',
-  description: 'The connected ecosystem demo — shows how the full Cox Automotive suite (Autotrader, Dealer.com, VinSolutions, vAuto, Deal Central, Dealertrack DMS, Xtime, AMP, DDC Advertising, UNIFI) works together as a unified system. This is the "exclamation point of a connected demo." (Richard White)',
-  flow: [
-    {phase:'Consumer Shopping', time:'2-3 min', products:'Autotrader + KBB + Dealer.com + DDC Advertising', script:'Customer starts shopping on Autotrader/KBB, browses inventory, gets personalized payments. DDC Advertising targets them across channels with dynamic, VIN-level ads. Customer crosses to the dealer\'s Dealer.com website — personalization follows WITHOUT login. AMP identifies the shopping behavior and triggers proactive outreach.'},
-    {phase:'Inventory & Pricing Intelligence', time:'2-3 min', products:'vAuto + Dealer.com + Autotrader', script:'Behind the scenes, vAuto is pricing inventory using Profit Time AI scoring, Manheim data, and AT/KBB market intelligence. Prices update to Dealer.com and Autotrader in real time — zero lag, zero manual effort. Stockwave is sourcing acquisition opportunities. The used car manager lives here; the data flows everywhere.'},
-    {phase:'Lead Capture & Engagement', time:'2-3 min', products:'Dealer.com + VinSolutions + AMP', script:'Customer submits a lead or starts a deal via Accelerate My Deal. VinSolutions captures the lead enriched with AT/KBB shopping data. Predictive Insights scores the customer. AMP behavioral data shows what they\'ve been browsing across the network. The salesperson sees ALL of this on the task page — no other CRM can do this.'},
-    {phase:'Deal Building', time:'3-4 min', products:'VinSolutions + Deal Central', script:'Salesperson uses Deal Central to build a transparent, interactive proposal. Customer can start online and pick up in-store — or start fresh in the showroom. Deal Central pulls vehicle data, customer data, and pricing from across the ecosystem. This is where the "connected" story becomes tangible — one deal, one data set, zero re-entry.'},
-    {phase:'F&I, Contracting & DMS', time:'2-3 min', products:'Deal Central + UNIFI / F&I + Dealertrack DMS', script:'Deal flows from Deal Central into F&I — no re-keying customer or vehicle data. UNIFI connects to lenders, structures the deal, handles compliance. Contracted deal posts directly to Dealertrack DMS with proper GL coding — zero integration fees. Funding goes from 7-28 days to 24-48 hours. Accounting gets clean data without manual reconciliation.'},
-    {phase:'Service Retention & Re-engagement', time:'2-3 min', products:'Xtime + VinSolutions + AMP + vAuto', script:'After the sale, Xtime schedules the first service at the right interval. When the customer arrives for service, vAuto sees an acquisition opportunity via KBB ICO — the service drive becomes the dealer\'s own auction block. AMP re-engages the customer with behavior-driven marketing when they start shopping again. The loop closes.'},
-    {phase:'The Loop', time:'1-2 min', products:'Full Ecosystem', script:'Close by showing the full loop: Shop → Price → Lead → Deal → F&I → DMS → Service → Acquire → Re-engage → Shop again. Every handoff is zero integration fees, real-time data flow, one customer record. No competitor can replicate this end-to-end journey because no competitor owns all the pieces.'}
-  ],
-  keyPhrases: [
-    '"Hub of the wheel" — Cox products at the center, everything connected',
-    '"Zero integration fees" — every connection is free, unlike CDK/Reynolds ($300-700/mo)',
-    '"First-party data that nobody else has" — AT/KBB shopping behavior is exclusive to Cox',
-    '"One customer record, one data set, zero re-entry" — data flows, it doesn\'t get re-keyed',
-    '"The exclamation point of a connected demo" — Richard White on Deal Central\'s role in the Cox Connected Demo'
-  ],
-  antiPatterns: [
-    'Don\'t demo each product independently and say "they integrate" at the end — show the HANDOFFS',
-    'Don\'t spend equal time on every product — weight toward the personas in the room',
-    'Don\'t skip the "loop" close — the lifecycle story is what makes the Cox Connected Demo different from 7 separate demos',
-    'Don\'t forget to say "zero integration fees" — it\'s the single most powerful multi-solution argument'
-  ]
-};
-
-const ANTI_PATTERNS = [
-  {icon:'🚫',text:'Never open with company overview slides. Zero dealer personas wanted this.'},
-  {icon:'⏰',text:'Never give fixed ops or F&I the "speed round" at the end. They generate half the profit.'},
-  {icon:'🔗',text:'Never say "we integrate with everything" without specifics. They will verify.'},
-  {icon:'📊',text:'Never demo the user view to a manager. GMs and GSMs need the management/reporting view.'},
-  {icon:'💰',text:'Never send pricing or a proposal before it\'s been requested.'},
-  {icon:'📏',text:'Never use a trial close ("On a scale of 1-10"). Universally despised.'},
-  {icon:'🎯',text:'Never demo a "perfect customer" for F&I. Complexity is where the value lives.'},
-  {icon:'👻',text:'Never forget the Controller. She controls the budget and will find every flaw.'},
-];
-
-// ═══════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════
-let state = {
-  phase: 1,
-  r360: false,
-  selectedPersonas: [],
-  personaNames: {},
-  selectedProducts: [],
-  demoMinutes: 30,
-  rsmBrief: '',
-  dealerName: '',
-  gamePlanGenerated: false,
-  timerRunning: false,
-  timerSeconds: 0,
-  timerInterval: null,
-  scores: {},
-  debriefNotes: '',
-  objections: '',
-  nextSteps: ''
-};
-
-// ═══════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════
-function goPhase(n) {
-  state.phase = n;
-  document.querySelectorAll('.phase-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.phase == n);
-  });
-  render();
-}
-
-function resetAll() {
-  if (state.timerInterval) clearInterval(state.timerInterval);
-  state = { phase:1, r360:false, selectedPersonas:[], personaNames:{}, selectedProducts:[], demoMinutes:30, rsmBrief:'', dealerName:'', gamePlanGenerated:false, timerRunning:false, timerSeconds:0, timerInterval:null, scores:{}, debriefNotes:'', objections:'', nextSteps:'' };
-  document.querySelectorAll('.phase-tab').forEach(t => {
-    t.classList.remove('done');
-    t.classList.toggle('active', t.dataset.phase == '1');
-  });
-  render();
-}
-
-function togglePersona(id) {
-  const idx = state.selectedPersonas.indexOf(id);
-  if (idx > -1) state.selectedPersonas.splice(idx, 1);
-  else state.selectedPersonas.push(id);
-  render();
-}
-
-function toggleProduct(p) {
-  const idx = state.selectedProducts.indexOf(p);
-  if (idx > -1) state.selectedProducts.splice(idx, 1);
-  else state.selectedProducts.push(p);
-  render();
-}
-
-function toggleR360() {
-  state.r360 = !state.r360;
-  if (state.r360) {
-    state.demoMinutes = 20;
-  }
-  render();
-}
-
-function setScore(key, val) {
-  state.scores[key] = val;
-  render();
-}
-
-// ═══════════════════════════════════════
-// PHASE 1: GAME PLAN
-// ═══════════════════════════════════════
-function renderPhase1() {
-  if (state.gamePlanGenerated) return renderGamePlan();
-
-  return `
-    <h2 class="section-title">Pre-Call Game Plan</h2>
-    <p class="section-sub">Answer these questions to generate a persona-specific coaching plan for your demo.</p>
-
-    <div class="card">
-      <h3>Who's in the room?</h3>
-      <p style="margin-bottom:10px">Select every persona who will be on the call. This drives your entire approach.</p>
-      <div class="persona-grid">
-        ${Object.values(PERSONAS).map(p => `
-          <div class="persona-chip ${state.selectedPersonas.includes(p.id)?'selected':''}" onclick="togglePersona('${p.id}')">
-            <div class="emoji">${p.emoji}</div>
-            <div class="name">${p.name}</div>
-            <div class="role">${p.role}</div>
-            <div class="window">⏱ ${p.window} attention window</div>
-          </div>
-        `).join('')}
-      </div>
+function renderPhase1(){
+  if(state.gamePlanGenerated)return renderGamePlan();
+  return `<h2 class="section-title">Pre-Call Game Plan</h2><p class="section-sub">Quick setup → one-page cheat sheet for your demo.</p>
+    <div class="card"><h3>Who's on the call?</h3>
+      <div class="persona-grid">${Object.values(PERSONAS).map(p=>`<div class="persona-chip ${state.selectedPersonas.includes(p.id)?'selected':''}" onclick="togglePersona('${p.id}')"><span class="emoji">${p.emoji}</span> <span class="name">${p.name}</span><div class="role">${p.role}</div></div>`).join('')}</div>
     </div>
-
-    ${state.selectedPersonas.length > 0 ? `
-    <div class="card">
-      <h3>Who specifically? <span style="font-weight:400;font-size:11px;color:var(--muted)">(optional — improves copilot output)</span></h3>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Enter names so the post-demo copilot can reference real people in its notes and action items.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px">
-        ${state.selectedPersonas.map(id => {
-          const p = PERSONAS[id];
-          return `<div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:16px">${p.emoji}</span>
-            <span style="font-size:12px;font-weight:600;color:var(--trust);min-width:100px">${p.name}</span>
-            <input type="text" value="${state.personaNames[id]||''}" onchange="state.personaNames['${id}']=this.value" placeholder="Enter name..." style="flex:1;padding:6px 10px;font-size:12px">
-          </div>`;
-        }).join('')}
+    ${state.selectedPersonas.length?`<div class="card"><h3>Names <span style="font-weight:400;font-size:10px;color:var(--muted)">(optional — improves copilot)</span></h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px">
+        ${state.selectedPersonas.map(id=>{const p=PERSONAS[id];return`<div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">${p.emoji}</span><span style="font-size:11px;font-weight:600;color:var(--trust);min-width:80px">${p.name}</span><input type="text" value="${state.personaNames[id]||''}" onchange="state.personaNames['${id}']=this.value" placeholder="Name..." style="flex:1;padding:5px 8px;font-size:11px"></div>`}).join('')}
+      </div></div>`:''}
+    <div class="card"><h3>What are you demoing?</h3>
+      <div style="margin-bottom:10px;padding:10px 12px;border-radius:8px;border:2px solid ${state.r360?'var(--aqua)':'var(--border)'};background:${state.r360?'#00BCDD08':'var(--card)'};cursor:pointer;display:flex;align-items:center;gap:10px" onclick="toggleR360()">
+        <div style="width:36px;height:36px;border-radius:8px;background:${state.r360?'linear-gradient(135deg,var(--power),var(--aqua))':'var(--bg)'};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${state.r360?'🔄':'⭕'}</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:${state.r360?'var(--trust)':'var(--muted)'}">Cox Connected Demo</div><div style="font-size:10px;color:var(--muted)">15-20 min full ecosystem walkthrough</div></div>
       </div>
+      <p style="font-size:10px;color:var(--muted);margin-bottom:6px">${state.r360?'✓ Connected Demo selected. Add products below for deeper dives after:':'Select products:'}</p>
+      <div class="pill-row">${PRODUCTS.map(p=>{let h=`<button class="pill ${state.selectedProducts.includes(p.id)?'selected':''}" onclick="toggleProduct('${p.id}')">${p.label}</button>`;if(p.subs&&state.selectedProducts.includes(p.id)){p.subs.forEach(s=>{h+=`<button class="pill sub ${(state.selectedSubs[p.id]||[]).includes(s)?'selected':''}" onclick="toggleSub('${p.id}','${s}')">${s}</button>`})}return h}).join('')}</div>
+      ${state.r360&&state.selectedProducts.length?`<p style="font-size:10px;color:var(--power);font-weight:600">📋 Connected Demo (15-20m) → ${state.selectedProducts.join(', ')} deep dive${state.selectedProducts.length>1?'s':''}</p>`:''}
     </div>
-    ` : ''}
-
-    <div class="card">
-      <h3>What are you demoing?</h3>
-      <div style="margin-bottom:12px;padding:12px 14px;border-radius:10px;border:2px solid ${state.r360?'var(--aqua)':'var(--border)'};background:${state.r360?'#00BCDD08':'var(--card)'};cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px" onclick="toggleR360()">
-        <div style="width:42px;height:42px;border-radius:10px;background:${state.r360?'linear-gradient(135deg,var(--power),var(--aqua))':'var(--bg)'};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .15s">${state.r360?'🔄':'⭕'}</div>
-        <div style="flex:1">
-          <div style="font-size:14px;font-weight:700;color:${state.r360?'var(--trust)':'var(--muted)'}">Cox Connected Demo</div>
-          <div style="font-size:11px;color:var(--muted)">15-20 min connected ecosystem demo — Autotrader, Dealer.com, VinSolutions, vAuto, Deal Central, DMS, Xtime, AMP, DDC Advertising, UNIFI — full customer lifecycle</div>
-        </div>
-        <div style="font-size:11px;font-weight:700;color:${state.r360?'var(--aqua)':'var(--muted)'}">⏱ 15-20m</div>
-      </div>
-      <p style="font-size:11px;color:var(--muted);margin-bottom:8px">${state.r360 ? '✓ Cox Connected Demo selected as your lead demo. <strong style="color:var(--trust)">Select products below for deeper dives after the Connected Demo:</strong>' : 'Or select individual products:'}</p>
-      <div class="pill-row">
-        ${PRODUCTS.map(p => `<button class="pill ${state.selectedProducts.includes(p)?'selected':''}" onclick="toggleProduct('${p}')">${p}</button>`).join('')}
-      </div>
-      ${state.r360 && state.selectedProducts.length > 0 ? `<p style="font-size:11px;color:var(--power);font-weight:600;margin-top:6px">📋 Demo plan: Cox Connected Demo (15-20 min) → Deep dive on ${state.selectedProducts.join(', ')}</p>` : ''}
-    </div>
-
-    <div class="card">
-      <label class="field">
-        <span class="label-text">Time available (minutes)</span>
-        <select onchange="state.demoMinutes=parseInt(this.value)">
-          ${[15,20,30,45,60].map(m => `<option value="${m}" ${state.demoMinutes===m?'selected':''}>${m} min</option>`).join('')}
-        </select>
-      </label>
-    </div>
-
-    <button class="btn-primary" onclick="generateGamePlan()" ${state.selectedPersonas.length===0?'disabled':''}>
-      Generate Game Plan →
-    </button>
-    ${state.selectedPersonas.length===0?'<span style="font-size:11px;color:var(--muted);margin-left:12px">Select at least one persona</span>':''}
-  `;
+    <div class="card"><label class="field" style="margin:0"><span class="label-text">Time available</span>
+      <select onchange="state.demoMinutes=parseInt(this.value)">${[15,20,30,45,60].map(m=>`<option value="${m}" ${state.demoMinutes===m?'selected':''}>${m} min</option>`).join('')}</select>
+    </label></div>
+    <button class="btn-primary" onclick="generateGamePlan()" ${state.selectedPersonas.length===0?'disabled':''}>Generate Game Plan →</button>
+    ${state.selectedPersonas.length===0?'<span style="font-size:10px;color:var(--muted);margin-left:10px">Select at least one persona</span>':''}`;
 }
-
-function generateGamePlan() {
-  state.gamePlanGenerated = true;
-  document.querySelector('[data-phase="1"]').classList.add('done');
-  render();
-}
-
-function renderGamePlan() {
-  const personas = state.selectedPersonas.map(id => PERSONAS[id]);
-  const totalMin = state.demoMinutes;
-  const products = state.r360 ? R360_PRODUCTS : state.selectedProducts;
-
-  // New time budget: Open (brief) → Demo with woven discovery → Handoff
-  const openMin = Math.max(2, Math.round(totalMin * 0.1));
-  const handoffMin = Math.max(3, Math.round(totalMin * 0.15));
-  const demoMin = totalMin - openMin - handoffMin;
-
-  const shortestWindow = Math.min(...personas.map(p => p.windowNum || 2));
-  const shortestPerson = personas.find(p => (p.windowNum || 2) === shortestWindow);
-
-  // Collect product-specific questions
-  const productQs = [];
-  products.forEach(p => {
-    if (PRODUCT_QUESTIONS[p]) {
-      PRODUCT_QUESTIONS[p].forEach(q => { if (!productQs.includes(q)) productQs.push({product:p, q:q}); });
-    }
-  });
-
-  let html = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
-      <div>
-        <h2 class="section-title">Your Game Plan</h2>
-        <p class="section-sub" style="margin-bottom:0">${state.r360?'🔄 Cox Connected Demo'+(state.selectedProducts.length?' + '+state.selectedProducts.join(', '):''):state.selectedProducts.join(', ')} · ${totalMin} min · ${personas.map(p=>p.emoji).join(' ')}</p>
-      </div>
-      <div style="display:flex;gap:6px">
-        <button class="btn-secondary" onclick="state.gamePlanGenerated=false;render()">← Edit</button>
-        <button class="btn-primary" onclick="goPhase(2)">Start Demo →</button>
-      </div>
-    </div>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:14px;font-style:italic">These are starting frameworks, not scripts. Every dealer is different — read the room and adapt. The best demos feel like conversations, not presentations.</p>
-  `;
-
-  // ─── Compact Time Budget ───
-  html += `<div class="gp-section">
-    <h4>⏱ ${totalMin}-Minute Structure</h4>
-    <div class="time-bar">
-      <div class="seg seg-discovery" style="width:${Math.round(openMin/totalMin*100)}%">Open ${openMin}m</div>
-      <div class="seg seg-demo" style="width:${Math.round(demoMin/totalMin*100)}%">Demo + Discovery ${demoMin}m</div>
-      <div class="seg seg-close" style="width:${Math.round(handoffMin/totalMin*100)}%">Handoff ${handoffMin}m</div>
-    </div>
-    <p style="font-size:12px"><strong>⚡ ${shortestPerson.emoji} ${shortestWindow}-min attention window</strong> — show something relevant before this mark. Discovery isn't a separate phase — weave questions throughout the demo.</p>
-  </div>`;
-
-  // ─── Virtual Demo Warnings (compact) ───
-  const warnings = [];
-  if (personas.length > 2) warnings.push('3+ on the call — call on people by name often. Silence on Teams = multitasking.');
-  if (personas.some(p => p.id === 'fixedops') && personas.length > 1) warnings.push('Fixed Ops on the call — don\'t save service for the end or they\'ll mute and multitask.');
-  if (personas.some(p => p.id === 'fi') && personas.length > 1) warnings.push('F&I on the call — don\'t bolt on F&I as the last 5 min. Schedule a separate call if you can\'t give it real time.');
-  if (personas.some(p => p.id === 'controller')) warnings.push('Controller on the call — did you send a pre-meeting one-pager? If not, they have Outlook open on their other monitor.');
-  if (personas.some(p => p.id === 'usedcar')) warnings.push('Used Car Manager — 2-min window. Pull up VINs from their lot or they\'re back in vAuto.');
-  if (personas.some(p => p.id === 'dp') && personas.some(p => p.id === 'gm')) warnings.push('DP + GM both on — DP thinks bigger (growth, market share). GM thinks operational (people, process). Hit both levels.');
-  if (personas.some(p => p.id === 'marketing') && !personas.some(p => p.id === 'gm')) warnings.push('Marketing Director without GM — arm them with the ROI story they need to sell this internally.');
-  warnings.push('📹 Camera on, clean background, share app window only, game plan on second monitor or phone.');
-  if (warnings.length) {
-    html += `<div class="gp-section warning"><h4>⚠️ Heads Up</h4><ul style="font-size:12px">${warnings.map(w => `<li>${w}</li>`).join('')}</ul></div>`;
-  }
-
-  // ─── Cox Connected Demo flow (if selected) ───
-  if (state.r360) {
-    html += `<div class="gp-section" style="border-left-color:var(--aqua)">
-      <h4 style="color:var(--aqua)">🔄 Cox Connected Demo Flow</h4>
-      <div style="display:grid;gap:6px;margin:8px 0">
-      ${R360_GUIDE.flow.map((step, i) => `
-        <div style="padding:6px 10px;background:#fff;border-radius:6px;display:flex;gap:10px;align-items:center">
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${i+1}</div>
-          <div style="flex:1;font-size:12px"><strong>${step.phase}</strong> <span style="color:var(--muted)">(${step.time})</span><br><span style="color:var(--muted);font-size:11px">${step.products}</span></div>
-        </div>
-      `).join('')}
-      </div>
-      <p style="font-size:11px;color:var(--aqua);font-weight:600;margin-top:6px">Key phrases: "hub of the wheel" · "zero integration fees" · "first-party data nobody else has" · "one customer record, zero re-entry"</p>
-    </div>`;
-
-    if (state.selectedProducts.length > 0) {
-      html += `<div class="gp-section green">
-        <h4>🔎 Deep Dives After Connected Demo</h4>
-        <p style="font-size:12px;margin-bottom:6px">Transition: "Now that you've seen how the ecosystem connects, let me show you [product] in detail..."</p>
-        ${state.selectedProducts.map(p => `<span style="display:inline-block;background:#e6fff0;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;color:var(--green);margin:2px">${p}</span>`).join('')}
-        <p style="font-size:11px;color:var(--muted);margin-top:6px">Budget ~10-15 min per deep dive. Go deeper where they lean in, abbreviate the rest.</p>
-      </div>`;
+function renderGamePlan(){
+  const personas=state.selectedPersonas.map(id=>PERSONAS[id]);
+  const totalMin=state.demoMinutes;
+  const discMin=Math.min(5,Math.round(totalMin*.15));
+  const closeMin=Math.round(totalMin*.12);
+  const demoMin=totalMin-discMin-closeMin;
+  let html=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <div><h2 class="section-title">Your Game Plan</h2><p class="section-sub" style="margin:0">${totalMin}m · ${personas.map(p=>p.emoji+' '+(state.personaNames[p.id]||p.name)).join(', ')}</p></div>
+    <div style="display:flex;gap:4px"><button class="btn-secondary" onclick="state.gamePlanGenerated=false;render()">← Edit</button><button class="btn-primary" onclick="goPhase(2)">Start Demo →</button></div></div>`;
+  html+=`<div class="gp-block blue"><h4>⏱ Time Budget</h4>
+    <div class="time-bar"><div class="seg seg-disc" style="width:${discMin/totalMin*100}%">Open ${discMin}m</div><div class="seg seg-demo" style="width:${demoMin/totalMin*100}%">Demo ${demoMin}m</div><div class="seg seg-close" style="width:${closeMin/totalMin*100}%">Close ${closeMin}m</div></div>
+    <p style="font-size:11px">Discovery is a thread, not a phase — keep asking questions throughout, not just upfront.</p></div>`;
+  if(state.r360){
+    html+=`<div class="gp-block aqua"><h4>🔄 Cox Connected Demo Flow</h4>
+      ${CONNECTED_FLOW.map((s,i)=>`<div class="flow-step"><div class="flow-num">${i+1}</div><div><strong style="font-size:12px">${s.phase}</strong> <span style="font-size:10px;color:var(--muted)">(${s.time})</span><div class="products">${s.products}</div><p style="font-size:11px;margin-top:2px">${s.script}</p></div></div>`).join('')}
+      <p style="font-size:11px;margin-top:6px"><strong>Key phrases:</strong> "Hub of the wheel" · "Zero integration fees" · "First-party data nobody else has" · "One customer record, zero re-entry"</p></div>`;
+    if(state.selectedProducts.length){
+      html+=`<div class="gp-block green"><h4>🔎 Deep Dives After Connected Demo</h4>
+        <p style="font-size:11px;margin-bottom:4px">Transition: "Now that you've seen how the ecosystem connects, let me show you [product] and how it addresses [their pain]."</p>
+        ${state.selectedProducts.map(p=>`<div style="padding:4px 0;font-size:12px"><strong>${p}</strong> <span style="color:var(--muted)">— ~10-15 min, tailored to ${personas.map(pe=>state.personaNames[pe.id]||pe.name).join(' + ')}</span></div>`).join('')}</div>`;
     }
   }
-
-  // ─── Opening (compact) ───
-  html += `<div class="gp-section">
-    <h4>🎯 Open (first ${openMin} min) — Get Them Talking</h4>
-    <p style="font-size:12px;margin-bottom:8px">Pick ONE question per person. Don't interrogate — ask, listen, then connect what you show to what they said.</p>
-    ${personas.map(p => `<div style="padding:6px 10px;background:#fff;border-radius:6px;margin:4px 0;font-size:12.5px">
-      <strong>${p.emoji} ${state.personaNames[p.id]||p.name}:</strong> ${p.openingQ}
-    </div>`).join('')}
-  </div>`;
-
-  // ─── Discovery Questions to Weave Throughout (product-specific) ───
-  if (productQs.length > 0) {
-    html += `<div class="gp-section">
-      <h4>🔍 Discovery Questions — Weave Throughout the Demo</h4>
-      <p style="font-size:12px;margin-bottom:8px">Don't front-load these. Drop them naturally as you demo each product. "Before I show you this next piece — quick question..."</p>
-      ${productQs.slice(0, 8).map(pq => `<div style="padding:5px 10px;background:#fff;border-radius:6px;margin:3px 0;font-size:12px;border-left:3px solid var(--power)">
-        <span style="font-size:10px;color:var(--power);font-weight:600">${pq.product}</span> ${pq.q}
-      </div>`).join('')}
-    </div>`;
-  }
-
-  // ─── What to Demo (compact outcomes) ───
-  html += `<div class="gp-section green">
-    <h4>🎬 Demo Toward Outcomes, Not Features</h4>
-    ${personas.map(p => `<div style="padding:6px 10px;background:#fff;border-radius:6px;margin:4px 0;font-size:12px">
-      <strong>${p.emoji} ${state.personaNames[p.id]||p.name}:</strong> ${p.outcomeFrame} <span style="color:var(--muted);font-size:11px">— ${p.demoFrame}</span>
-    </div>`).join('')}
-  </div>`;
-
-  // ─── Engagement Checkpoints (compact) ───
-  const midpoint = Math.round(demoMin / 2);
-  html += `<div class="gp-section">
-    <h4>🔄 Check Engagement</h4>
-    <div style="font-size:12px">
-      <p><strong>At ${openMin + midpoint} min</strong> — Stop and ask: "Is this the kind of thing that would change how your team handles [challenge]?"</p>
-      <p style="margin-top:4px"><strong>If someone's quiet</strong> — Call them by name: "[Name], how does your team handle this today?"</p>
-      <p style="margin-top:4px"><strong>Off-topic tangent</strong> — "Great question — let me bookmark that. I want to make sure we cover [their pain] while we have time."</p>
-    </div>
-  </div>`;
-
-  // ─── RSM Handoff (compact) ───
-  html += `<div class="gp-section green">
-    <h4>✅ Handoff to the Regional (last ${handoffMin} min)</h4>
-    <div style="font-size:12.5px">
-      <p><strong>"Do you want [RSM] to put together a quote for you?"</strong></p>
-      <p><strong>"What do next steps look like on your end?"</strong></p>
-      <p><strong>"What are your blockers?"</strong></p>
-      <p><strong>"When does your current contract come up?"</strong></p>
-      <p><strong>"Who else would need to see this before a decision?"</strong></p>
-    </div>
-  </div>`;
-
+  html+=`<div class="gp-block blue"><h4>🎯 Opening & Discovery Questions</h4>
+    <p style="font-size:11px;margin-bottom:6px">Open with 1-2 of these, then weave the rest in during the demo. Don't front-load — it becomes an inquisition.</p>`;
+  personas.forEach(p=>{
+    const name=state.personaNames[p.id]||p.name;
+    html+=`<div style="padding:6px 0;border-bottom:1px solid var(--border)"><strong>${p.emoji} ${name}</strong>: <span class="q">${p.openingQ}</span></div>`;
+    const prodQs=[];
+    state.selectedProducts.forEach(prod=>{if(p.productQs&&p.productQs[prod])prodQs.push({prod,q:p.productQs[prod]})});
+    if(prodQs.length) prodQs.forEach(pq=>{html+=`<div style="padding:3px 0 3px 20px;font-size:11px"><span style="color:var(--aqua);font-weight:600">${pq.prod}:</span> <span class="q">${pq.q}</span></div>`});
+  });
+  html+=`</div>`;
+  html+=`<div class="gp-block green"><h4>🎬 How to Demo for This Room</h4>`;
+  personas.forEach(p=>{html+=`<div style="padding:4px 0;font-size:12px"><strong>${p.emoji} ${state.personaNames[p.id]||p.name}:</strong> ${p.demoFrame}</div>`});
+  html+=`</div>`;
+  const warns=[];
+  if(personas.length>2)warns.push('3+ people — call on people by name often. Silence on Teams = multitasking.');
+  if(personas.some(p=>p.id==='fixedops')&&personas.length>1)warns.push('Fixed Ops on the call — don\'t save service for the end.');
+  if(personas.some(p=>p.id==='fi')&&personas.length>1)warns.push('F&I on the call — don\'t bolt it on as last 5 minutes.');
+  if(personas.some(p=>p.id==='controller'))warns.push('Controller on the call — send a one-pager BEFORE the meeting.');
+  if(personas.some(p=>p.id==='usedcar'))warns.push('Used Car Manager — bring VINs from their lot to keep them engaged.');
+  warns.push('Basics: camera on, share app window (not full screen), close tabs, game plan on second monitor.');
+  html+=`<div class="gp-block orange"><h4>📹 Virtual Demo Tips</h4><ul>${warns.map(w=>`<li style="font-size:11px">${w}</li>`).join('')}</ul></div>`;
+  html+=`<div class="gp-block green"><h4>✅ Close — Hand Off to Regional</h4>
+    <ul><li><span class="q">"Do you want [RSM] to put together a quote?"</span></li>
+    <li><span class="q">"What do next steps look like on your end?"</span></li>
+    <li><span class="q">"What are your blockers?"</span></li>
+    <li><span class="q">"When does your current contract come up?"</span></li>
+    <li><span class="q">"Who else needs to see this before a decision?"</span></li></ul>
+    <p style="font-size:10px;color:var(--orange);margin-top:4px">⚠️ Don't quote pricing — that's the RSM's lane. Don't use "On a scale of 1-10." Don't end with "Any questions?"</p></div>`;
   return html;
 }
-
-// ═══════════════════════════════════════
-// PHASE 2: LIVE REFERENCE
-// ═══════════════════════════════════════
-function renderPhase2() {
-  const personas = state.selectedPersonas.map(id => PERSONAS[id]);
-  if (!personas.length) return `<div class="card"><p>Complete your Game Plan first.</p><button class="btn-primary" onclick="goPhase(1)">← Go to Game Plan</button></div>`;
-
-  const totalSec = state.demoMinutes * 60;
-  const elapsed = state.timerSeconds;
-  const remaining = Math.max(0, totalSec - elapsed);
-  const mins = Math.floor(elapsed / 60);
-  const secs = elapsed % 60;
-  const remMins = Math.floor(remaining / 60);
-  const remSecs = remaining % 60;
-
-  // Match new time structure: Open → Demo+Discovery → Handoff
-  const totalMin = state.demoMinutes;
-  const openEnd = Math.max(2, Math.round(totalMin * 0.1));
-  const handoffStart = Math.round(totalMin * 0.85);
-  let currentPhaseLabel = 'Open';
-  let phaseColor = 'var(--aqua)';
-  if (mins >= handoffStart) { currentPhaseLabel = 'Handoff'; phaseColor = 'var(--green)'; }
-  else if (mins >= openEnd) { currentPhaseLabel = 'Demo + Discovery'; phaseColor = 'var(--power)'; }
-
-  const shortestWindow = Math.min(...personas.map(p => p.windowNum || 2));
-
-  // Collect product questions for mid-demo discovery
-  const products = state.r360 ? R360_PRODUCTS : state.selectedProducts;
-  const productQs = [];
-  products.forEach(p => { if (PRODUCT_QUESTIONS[p]) PRODUCT_QUESTIONS[p].forEach(q => productQs.push({product:p, q:q})); });
-
-  let html = `
-    <div class="live-panel">
-      <div class="live-header">
-        <div>
-          <div class="live-phase-label">${currentPhaseLabel}</div>
-          <div class="live-timer">${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}</div>
-        </div>
-        <div style="flex:1;text-align:center">
-          <div style="font-size:11px;opacity:.6">Remaining</div>
-          <div style="font-size:20px;font-weight:700">${remMins}:${String(remSecs).padStart(2,'0')}</div>
-        </div>
-        <div class="timer-controls">
-          <button class="timer-btn" onclick="toggleTimer()">${state.timerRunning ? '⏸ Pause' : '▶ Start'}</button>
-          <button class="timer-btn" onclick="resetTimer()">↺</button>
-        </div>
-      </div>
-      <div class="live-body">
-  `;
-
-  // ─── Phase-aware prompts (bigger, fewer, glanceable) ───
-  if (mins < openEnd) {
-    html += `<div class="live-card prompt" style="font-size:15px;padding:14px">
-      <h5 class="blue" style="font-size:14px">🎯 GET THEM TALKING</h5>
-      <p style="font-size:13px">Pick one question per person. Listen. Don't share your screen yet.</p>
-    </div>`;
-    personas.forEach(p => {
-      html += `<div class="live-card prompt" style="padding:10px 14px">
-        <strong style="font-size:14px">${p.emoji} ${state.personaNames[p.id]||p.name}</strong>
-        <p style="font-size:14px;margin-top:4px">${p.openingQ}</p>
-      </div>`;
-    });
-  } else if (mins < handoffStart) {
-    // Demo phase - show product-specific discovery to weave in
-    html += `<div class="live-card prompt" style="font-size:15px;padding:14px">
-      <h5 class="blue" style="font-size:14px">🎬 DEMO — Connect to What They Said</h5>
-      <p style="font-size:13px">Show outcomes, not features. Weave in discovery questions as you go.</p>
-    </div>`;
-
-    // R360 flow steps during demo
-    if (state.r360) {
-      const totalDemoMin = handoffStart - openEnd;
-      const elapsed360 = mins - openEnd;
-      const stepTime = totalDemoMin / R360_GUIDE.flow.length;
-      const currentStep = Math.min(Math.floor(elapsed360 / stepTime), R360_GUIDE.flow.length - 1);
-      R360_GUIDE.flow.forEach((step, i) => {
-        const isCurrent = i === currentStep;
-        const isDone = i < currentStep;
-        if (isCurrent) {
-          html += `<div class="live-card checkpoint" style="border-left-color:var(--aqua);background:#f0fafc;padding:12px 14px">
-            <h5 class="green" style="font-size:13px">▶ ${step.phase}</h5>
-            <p style="font-size:12.5px">${step.script}</p>
-          </div>`;
-        } else {
-          html += `<div style="padding:4px 14px;font-size:12px;color:var(--muted);${isDone?'opacity:.4':''}">${isDone?'✓':'○'} ${step.phase}</div>`;
-        }
-      });
-    }
-
-    // Product-specific discovery prompt to weave in
-    if (productQs.length > 0) {
-      const randomQ = productQs[Math.floor((mins - openEnd) / 3) % productQs.length];
-      html += `<div class="live-card prompt" style="margin-top:10px;padding:10px 14px">
-        <h5 class="blue" style="font-size:12px">🔍 WEAVE IN — ${randomQ.product}</h5>
-        <p style="font-size:13px">${randomQ.q}</p>
-      </div>`;
-    }
-
-    // Persona outcomes as compact reminders
-    html += `<div style="margin-top:10px;padding:8px 14px;background:#f5fdf8;border-radius:8px;border-left:3px solid var(--green)">
-      <strong style="font-size:11px;color:var(--green)">DEMO TOWARD:</strong>
-      ${personas.map(p => `<span style="display:block;font-size:12px;margin:2px 0">${p.emoji} ${p.outcomeFrame}</span>`).join('')}
-    </div>`;
-  } else {
-    // Handoff phase
-    html += `<div class="live-card checkpoint" style="font-size:15px;padding:14px">
-      <h5 class="green" style="font-size:14px">✅ HANDOFF TO REGIONAL</h5>
-      <p style="font-size:13px">Stop demoing. Summarize and ask:</p>
-    </div>
-    <div class="live-card checkpoint" style="padding:12px 14px">
-      <p style="font-size:15px;font-weight:600;margin:4px 0">"Do you want [RSM] to put together a quote?"</p>
-      <p style="font-size:15px;font-weight:600;margin:4px 0">"What do next steps look like on your end?"</p>
-      <p style="font-size:15px;font-weight:600;margin:4px 0">"What are your blockers?"</p>
-      <p style="font-size:14px;margin:4px 0;color:var(--muted)">"When does your current contract come up?"</p>
-      <p style="font-size:14px;margin:4px 0;color:var(--muted)">"Who else would need to see this?"</p>
-    </div>`;
+function renderPhase2(){
+  const personas=state.selectedPersonas.map(id=>PERSONAS[id]);
+  if(!personas.length)return`<div class="card"><p>Complete your Game Plan first.</p><button class="btn-primary" onclick="goPhase(1)">← Game Plan</button></div>`;
+  const totalSec=state.demoMinutes*60,elapsed=state.timerSeconds,remaining=Math.max(0,totalSec-elapsed);
+  const mins=Math.floor(elapsed/60),secs=elapsed%60,remMins=Math.floor(remaining/60),remSecs=remaining%60;
+  const discEnd=Math.min(5,Math.round(state.demoMinutes*.15)),closeStart=state.demoMinutes-Math.round(state.demoMinutes*.12);
+  let phaseName='Opening',phaseColor='var(--aqua)';
+  if(mins>=closeStart){phaseName='Close';phaseColor='var(--green)'}else if(mins>=discEnd){phaseName='Demo';phaseColor='var(--power)'}
+  let html=`<div class="live-panel"><div class="live-header">
+    <div><div style="font-size:10px;opacity:.6">${phaseName}</div><div class="live-timer">${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}</div></div>
+    <div style="flex:1;text-align:center"><div style="font-size:10px;opacity:.6">Left</div><div style="font-size:16px;font-weight:700">${remMins}m ${remSecs}s</div></div>
+    <div style="display:flex;gap:4px"><button class="timer-btn" onclick="toggleTimer()">${state.timerRunning?'⏸ Pause':'▶ Start'}</button><button class="timer-btn" onclick="resetTimer()">↺</button></div>
+  </div><div class="live-body">`;
+  if(mins<discEnd){
+    html+=`<div class="lp ask"><span class="tag blue">OPENING — ASK, DON'T SHOW YET</span><div class="big">Pick 1-2 questions. Listen. Then demo toward what they told you.</div></div>`;
+    personas.forEach(p=>{const name=state.personaNames[p.id]||p.name;html+=`<div class="lp ask"><span class="tag blue">${p.emoji} ${name}</span><div style="font-size:14px;font-weight:600;color:var(--joyride)">${p.openingQ}</div></div>`});
+  }else if(mins<closeStart){
+    html+=`<div class="lp do"><span class="tag green">DEMO — CONNECT TO THEIR PAIN</span><div class="big">Only show what connects to something they told you. Skip the rest.</div></div>`;
+    if(mins>discEnd+3&&mins<closeStart-5)html+=`<div class="lp ask"><span class="tag blue">🔄 MID-DEMO CHECK-IN</span><div style="font-size:14px;font-weight:600;color:var(--joyride)">"Is this the kind of thing that would change how your team handles this?"</div></div>`;
+    if(state.r360){const demoLen=closeStart-discEnd,elap=mins-discEnd,stepTime=demoLen/CONNECTED_FLOW.length,cur=Math.min(Math.floor(elap/stepTime),CONNECTED_FLOW.length-1),step=CONNECTED_FLOW[cur];
+      html+=`<div class="lp do"><span class="tag green">STEP ${cur+1}: ${step.phase.toUpperCase()}</span><div class="products" style="margin:2px 0">${step.products}</div><div style="font-size:13px">${step.script}</div></div>`}
+    personas.forEach(p=>{const name=state.personaNames[p.id]||p.name;html+=`<div class="lp do" style="padding:8px 12px"><span style="font-size:11px"><strong>${p.emoji} ${name}:</strong> ${p.demoFrame}</span></div>`});
+  }else{
+    html+=`<div class="lp do"><span class="tag green">CLOSE — HAND OFF TO REGIONAL</span><div class="big">Stop showing features. Summarize and ask:</div></div>`;
+    html+=`<div class="lp do"><div style="font-size:14px;font-weight:600;color:var(--trust)">"Do you want [RSM] to put together a quote?"</div><div style="font-size:14px;font-weight:600;color:var(--trust);margin-top:4px">"What do next steps look like on your end?"</div><div style="font-size:14px;font-weight:600;color:var(--trust);margin-top:4px">"What are your blockers?"</div></div>`;
   }
-
-  // Attention window warning
-  if (mins >= shortestWindow && mins < shortestWindow + 2) {
-    html += `<div class="live-card warning" style="padding:12px 14px">
-      <h5 class="orange" style="font-size:14px">⚠️ ATTENTION WINDOW</h5>
-      <p style="font-size:13px">You've hit the shortest attention span in the room. Show something relevant NOW.</p>
-    </div>`;
-  }
-
-  // Compact engagement rescue (always visible, collapsible)
-  html += `<details style="margin-top:10px">
-    <summary style="font-size:12px;font-weight:600;color:var(--orange);cursor:pointer;padding:6px 0">🚨 Engagement Rescue (tap to expand)</summary>
-    <div style="font-size:12px;padding:8px 12px;background:#fff5f0;border-radius:6px;margin-top:4px">
-      <p><strong>Quiet room:</strong> "What's the biggest challenge you're dealing with right now that we haven't touched on?"</p>
-      <p style="margin-top:4px"><strong>Skeptic:</strong> "That's fair. Tell me more about what you've seen with [current tool]."</p>
-      <p style="margin-top:4px"><strong>Off-topic:</strong> "Let me bookmark that — I want to cover [their pain] while we have time."</p>
-      <p style="margin-top:4px"><strong>Checked out:</strong> "[Name], how does your team handle this today?"</p>
-    </div>
-  </details>`;
-
-  html += `</div></div>`;
-
-  // Copilot button
-  html += `<div style="margin-top:14px;text-align:right">
-    <button class="btn-primary" onclick="if(state.timerRunning){clearInterval(state.timerInterval);state.timerRunning=false;}document.querySelector('[data-phase=&quot;2&quot;]').classList.add('done');goPhase(3)">Demo Complete → Generate Copilot Prompt</button>
-  </div>`;
-
+  html+=`<details style="margin-top:8px"><summary style="font-size:11px;font-weight:700;color:var(--orange);cursor:pointer">🚨 Engagement Rescue</summary>
+    <div class="lp warn" style="margin-top:6px"><div><strong>Quiet room:</strong> "I want to make sure I'm showing what matters — what's the biggest challenge we haven't touched?"</div>
+    <div style="margin-top:4px"><strong>Checked out:</strong> Call by name: "[Name], how does your team handle this currently?"</div>
+    <div style="margin-top:4px"><strong>Off-topic:</strong> "Great question — let me bookmark that. I want to cover [their pain] while we have time."</div></div></details>`;
+  html+=`</div></div>`;
+  html+=`<div style="margin-top:12px;text-align:right"><button class="btn-primary" onclick="if(state.timerRunning){clearInterval(state.timerInterval);state.timerRunning=false;}document.querySelector('[data-phase=&quot;2&quot;]').classList.add('done');goPhase(3)">Demo Complete → Copilot Prompt</button></div>`;
   return html;
 }
+function generateCopilotPrompt(personas){
+  const personaList=personas.map(p=>{const name=state.personaNames[p.id];return name?`- ${name} — ${p.name} (${p.role})`:`- ${p.name} (${p.role})`}).join('\n');
+  const productList=state.r360?'Cox Connected Demo (Full Ecosystem)'+(state.selectedProducts.length?' + Deep dives: '+state.selectedProducts.join(', '):''):state.selectedProducts.join(', ')||'Not specified';
+  const nameNote=personas.some(p=>state.personaNames[p.id])?'\nUse actual names (not just roles) throughout.':'';
+  return `You are a Cox Automotive PC Demo Copilot. Analyze the attached recording/transcript and produce CONCISE post-demo documentation. Bullet points, not paragraphs. Keep the entire output under 2 pages.
 
-function toggleTimer() {
-  if (state.timerRunning) {
-    clearInterval(state.timerInterval);
-    state.timerRunning = false;
-  } else {
-    state.timerRunning = true;
-    state.timerInterval = setInterval(() => {
-      state.timerSeconds++;
-      render();
-    }, 1000);
-  }
-  render();
-}
-
-function resetTimer() {
-  clearInterval(state.timerInterval);
-  state.timerRunning = false;
-  state.timerSeconds = 0;
-  render();
-}
-
-// ═══════════════════════════════════════
-// PHASE 3: DEBRIEF
-// ═══════════════════════════════════════
-function renderPhase3() {
-  const personas = state.selectedPersonas.map(id => PERSONAS[id]);
-  if (!personas.length) return `<div class="card"><p>Complete your Game Plan first.</p><button class="btn-primary" onclick="goPhase(1)">← Go to Game Plan</button></div>`;
-
-  if (state.timerRunning) { clearInterval(state.timerInterval); state.timerRunning = false; }
-
-  const prompt = generateCopilotPrompt(personas);
-
-  let html = `
-    <h2 class="section-title">Post-Demo Copilot</h2>
-    <p class="section-sub">Copy this prompt and paste it into Claude alongside your demo recording or transcript. It will generate structured notes, document dealer sentiment, and create RSM action items.</p>
-
-    <div class="card" style="border-top:3px solid var(--aqua)">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <h3 style="margin:0">📋 Your Copilot Prompt</h3>
-        <button class="btn-primary" style="padding:7px 16px;font-size:12px" onclick="copyPrompt()">Copy to Clipboard</button>
-      </div>
-      <p style="font-size:11px;color:var(--muted);margin-bottom:10px">This prompt is pre-loaded with your demo context — personas, products, and names. Paste it into Claude with the recording or transcript attached.</p>
-      <div id="copilotPrompt" style="background:#f5f7fa;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.7;white-space:pre-wrap;font-family:'Segoe UI',sans-serif;max-height:500px;overflow-y:auto;color:var(--text)">${escapeHtml(prompt)}</div>
-    </div>
-
-    <div class="card">
-      <h3>How to Use This</h3>
-      <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:12.5px">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--power);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">1</div>
-        <div><strong>Record your demo</strong> — Teams, Zoom, and WebEx all have built-in recording. Start it before discovery.</div>
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--power);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">2</div>
-        <div><strong>Copy the prompt above</strong> — It already has your dealer context, who was in the room, and what was demoed.</div>
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--power);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">3</div>
-        <div><strong>Paste into Claude with the recording</strong> — Upload the recording file or paste the transcript. Claude will process it.</div>
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--power);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">4</div>
-        <div><strong>Review and send to RSM</strong> — The output gives your RSM everything they need to follow up effectively.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Persona-Specific Follow-Up Guidance</h3>
-      <p style="margin-bottom:10px;font-size:12.5px;color:var(--muted)">The copilot will tailor its action items based on who was in the room, but here's a quick reference:</p>
-      ${personas.map(p => {
-        const name = state.personaNames[p.id];
-        return `
-        <div style="padding:10px 12px;background:#f8fafc;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--power)">
-          <strong>${p.emoji} ${name ? name + ' — ' : ''}${p.name} follow-up format:</strong>
-          <p style="margin-top:4px;font-size:12.5px">${p.followUp}</p>
-        </div>
-      `}).join('')}
-    </div>
-  `;
-
-  return html;
-}
-
-function generateCopilotPrompt(personas) {
-  const personaList = personas.map(p => {
-    const name = state.personaNames[p.id];
-    return name
-      ? `- ${name} — ${p.name} (${p.role})`
-      : `- [Name not provided] — ${p.name} (${p.role})`;
-  }).join('\n');
-
-  const productList = state.r360
-    ? 'Cox Connected Demo (Full Ecosystem)' + (state.selectedProducts.length ? ' + Deep dives on: ' + state.selectedProducts.join(', ') : '')
-    : state.selectedProducts.join(', ') || 'Not specified';
-
-  const personaFollowUp = personas.map(p => {
-    const name = state.personaNames[p.id];
-    return `${name || p.name} (${p.name}): ${p.followUp}`;
-  }).join('\n');
-
-  const personaLanguage = personas.map(p => {
-    const name = state.personaNames[p.id];
-    return `${name || p.name} (${p.name}) cares about: ${p.language.join(', ')}. Decision driver: ${p.decisionDriver}`;
-  }).join('\n');
-
-  const nameNote = personas.some(p => state.personaNames[p.id])
-    ? '\nIMPORTANT: Use the actual names provided above when writing notes, sentiment analysis, and action items. Reference people by name, not just by role.'
-    : '';
-
-  return `You are a Cox Automotive PC Demo Copilot. Analyze the attached demo recording/transcript and produce concise post-demo documentation.
-
-CRITICAL: Be brief. Bullet points, not paragraphs. The RSM and PC need to scan this in 2 minutes, not read an essay. If a section has nothing noteworthy, skip it entirely.
-
-═══ DEMO CONTEXT ═══
+DEMO CONTEXT:
 Products: ${productList}
-Time: ${state.demoMinutes} minutes
+Time: ${state.demoMinutes} min
+People on the call:
+${personaList}${nameNote}
 
-Attendees:
-${personaList}
-${nameNote}
+PRODUCE EXACTLY THREE SECTIONS:
 
-Persona context:
-${personaLanguage}
-
-═══ PRODUCE THESE 3 DELIVERABLES ═══
-
-## 1. DEMO NOTES (keep to half a page)
-- **Pain points surfaced** — what did the dealer say is broken or frustrating? Use their words.
-- **Key moments** — what got a reaction (positive or negative)? What questions did THEY ask?
-- **Unresolved objections** — anything raised that wasn't fully addressed
+## 1. DEMO NOTES (half page max)
+- **Discovery findings**: Pain points surfaced, current stack, frustrations — in their words.
+- **Key moments**: Features that got reactions (positive or negative). Questions they asked (these reveal priorities).
+- **Objections**: Each one verbatim, who said it, resolved or not.
 
 ## 2. SENTIMENT (one line per person)
-For each attendee: Name — 🟢🟡🟠🔴 — one-sentence summary of their engagement and stance.
+Format: Name — Role — 🟢🟡🟠🔴 — what excited them / what concerned them.
+Overall: 🟢 Hot / 🟡 Warm / 🟠 Cool / 🔴 Cold — one sentence why.
 
-Then one overall readiness rating:
-🟢 Hot (buying signals, next step agreed) | 🟡 Warm (interested, concerns remain) | 🟠 Cool (non-committal) | 🔴 Cold (disengaged)
+## 3. RSM ACTION ITEMS (max 5, numbered)
+Each: What to do → who → by when → what to say (reference the demo).
+Include unresolved objections, missing stakeholders, contract timing if mentioned.
 
-## 3. RSM ACTION ITEMS (3-5 bullets max)
-Each bullet: **What** to do → **Who** to contact → **By when** → **Why** (reference a specific moment from the demo)
-
-Include: unresolved objections to address, missing decision-makers for next call, contract timing if mentioned.
-
-Preferred follow-up format by persona:
-${personaFollowUp}
-
-## FORMATTING
-- Use attendee names, not just roles
-- Quote the dealer's actual words where impactful
-- Flag any commitments the PC made that the RSM should know about
-- Keep total output under 500 words`;
+RULES: Be brief. Use dealer's actual words. If the PC missed an opportunity, add a one-sentence "PC Note" at the end.`;
 }
 
-function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function renderPhase3(){
+  const personas=state.selectedPersonas.map(id=>PERSONAS[id]);
+  if(!personas.length)return`<div class="card"><p>Complete your Game Plan first.</p><button class="btn-primary" onclick="goPhase(1)">← Game Plan</button></div>`;
+  if(state.timerRunning){clearInterval(state.timerInterval);state.timerRunning=false}
+  const prompt=generateCopilotPrompt(personas);
+  return `<h2 class="section-title">Post-Demo Copilot</h2><p class="section-sub">Copy → paste into Claude with your recording → structured notes + RSM action items.</p>
+    <div class="card" style="border-top:3px solid var(--aqua)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <h3 style="margin:0">📋 Copilot Prompt</h3>
+        <button class="btn-primary" style="padding:6px 14px;font-size:11px" onclick="copyPrompt()">Copy to Clipboard</button>
+      </div>
+      <div id="copilotPrompt" style="background:#f5f7fa;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11.5px;line-height:1.65;white-space:pre-wrap;font-family:inherit;max-height:400px;overflow-y:auto;color:var(--text)">${escapeHtml(prompt)}</div>
+    </div>
+    <div class="card"><h3>How to Use</h3><p style="font-size:12px">1. Record your demo (Teams/Zoom) → 2. Copy prompt above → 3. Paste into Claude with recording → 4. Send output to RSM</p></div>
+    <div class="card"><h3>Follow-Up by Persona</h3>
+      ${personas.map(p=>{const name=state.personaNames[p.id];return`<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>${p.emoji} ${name?name+' — ':''}${p.name}:</strong> ${p.followUp}</div>`}).join('')}
+    </div>`;
 }
 
-function copyPrompt() {
-  const personas = state.selectedPersonas.map(id => PERSONAS[id]);
-  const prompt = generateCopilotPrompt(personas);
-  navigator.clipboard.writeText(prompt).then(() => {
-    const btn = document.querySelector('.btn-primary[onclick="copyPrompt()"]');
-    if (btn) {
-      btn.textContent = '✓ Copied!';
-      btn.style.background = 'var(--green)';
-      setTimeout(() => { btn.textContent = 'Copy to Clipboard'; btn.style.background = ''; }, 2000);
-    }
-  }).catch(() => {
-    // Fallback for non-HTTPS
-    const el = document.getElementById('copilotPrompt');
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-    alert('Press Ctrl+C to copy the selected text.');
-  });
+function copyPrompt(){
+  const personas=state.selectedPersonas.map(id=>PERSONAS[id]);
+  const prompt=generateCopilotPrompt(personas);
+  navigator.clipboard.writeText(prompt).then(()=>{
+    const btn=document.querySelector('[onclick="copyPrompt()"]');
+    if(btn){btn.textContent='✓ Copied!';btn.style.background='var(--green)';setTimeout(()=>{btn.textContent='Copy to Clipboard';btn.style.background=''},2000)}
+  }).catch(()=>{const el=document.getElementById('copilotPrompt');const r=document.createRange();r.selectNodeContents(el);window.getSelection().removeAllRanges();window.getSelection().addRange(r);alert('Press Ctrl+C to copy.')});
 }
 
-// ═══════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════
-function render() {
-  const app = document.getElementById('app');
-  switch(state.phase) {
-    case 1: app.innerHTML = renderPhase1(); break;
-    case 2: app.innerHTML = renderPhase2(); break;
-    case 3: app.innerHTML = renderPhase3(); break;
-  }
+function render(){
+  const app=document.getElementById('app');
+  switch(state.phase){case 1:app.innerHTML=renderPhase1();break;case 2:app.innerHTML=renderPhase2();break;case 3:app.innerHTML=renderPhase3();break}
 }
-
 render();
 </script>
 </body>
